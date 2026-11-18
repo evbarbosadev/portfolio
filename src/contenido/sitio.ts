@@ -1,0 +1,36 @@
+import type { DatosDelSitio } from "./esquemas";
+
+/**
+ * Datos del sitio. Único fichero con el nombre, el rol, la frase y los enlaces de contacto.
+ * La URL pública no va aquí: se lee de la variable VITE_URL_SITIO (ver .env).
+ */
+export const sitio: DatosDelSitio = {
+    // Cada elemento es una línea del nombre en el hero; juntos forman el nombre completo.
+    nombreEnLineas: ["Vinícius", "Barbosa"],
+    // El rol va en los datos estructurados y en la imagen OG; en la web lo dice la frase del hero.
+    rol: {
+        es: "Desarrollador full stack",
+        en: "Full-stack developer",
+    },
+    frase: {
+        es: "Desarrollador full stack en Ayesa Digital. Me gusta que las cosas funcionen bien y se vean bien.",
+        en: "Full-stack developer at Ayesa Digital. I like things to work well and look good.",
+    },
+    // Bloque de texto corto de la sección «Sobre mí». Un salto de línea separa párrafos.
+    sobreMi: {
+        es: "En Ayesa Digital hago sobre todo backend con Java y bastante gestión de incidencias, así que estoy acostumbrado a no parar hasta dar con la causa de un fallo. Fuera del trabajo me hago mis propias herramientas: un agente de IA sin frameworks, mi marca y una versión propia de la tipografía de esta web. Lo que no sé, lo aprendo. Y sí, soy de los que revisan dos veces un margen de 2 píxeles.",
+        en: "At Ayesa Digital I mostly work on the backend with Java, plus a fair amount of incident management, so I'm used to digging until I find the root cause of a bug. Outside work I build my own tools: an AI agent with no frameworks, my own brand and a custom version of the typeface on this site. If I don't know something, I learn it. And yes, I'm the kind of person who checks a 2-pixel margin twice.",
+    },
+    stack: ["Java 21 · SQL · Open Liberty · Docker", "Vue · Vite · Tailwind · Android"],
+    tambien: {
+        es: "Impresión 3D y fotografía",
+        en: "3D printing and photography",
+    },
+    email: "evbarbosadev@gmail.com",
+    enlaces: {
+        linkedin: "https://www.linkedin.com/in/evbarbosadev/",
+        github: "https://github.com/evbarbosadev",
+        instagram: "[POR RELLENAR: URL de Instagram]",
+    },
+    usuarioInstagram: "viny.visiøn",
+};

@@ -1,0 +1,257 @@
+/*
+    ESTILOS BASE
+    Fuente, temas, foco y tipografía por defecto. Todo sale de los tokens de tokens.css.
+*/
+
+/*
+    FUENTES
+    Vørlys Sans (la de la marca, solo en Regular: todo el sistema va en 400) para el texto y Geist
+    Mono para lo técnico. Las dos, autoalojadas. Vørlys Sans sale de la carpeta de la marca para
+    que no haya una segunda copia; de Geist Mono va solo el subconjunto latino, que cubre español
+    e inglés.
+*/
+@font-face {
+    font-family: "Vørlys Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../recursos/fuentes/VorlysSans-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Geist Mono";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2")
+        format("woff2-variations");
+}
+
+@layer base {
+    /*
+        TEMAS
+        Sin JavaScript manda el sistema (light dark). Con JavaScript, tema.js escribe data-tema
+        en <html> antes del primer pintado y el interruptor lo cambia después.
+    */
+    :root {
+        color-scheme: light dark;
+    }
+
+    [data-tema="claro"] {
+        color-scheme: light;
+    }
+
+    [data-tema="oscuro"] {
+        color-scheme: dark;
+    }
+
+    html {
+        background-color: var(--color-fondo);
+        color: var(--color-texto);
+        font-family: var(--font-sans);
+        font-size: 100%;
+        -webkit-text-size-adjust: 100%;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        /* Solo hay peso 400: el navegador no se inventa negritas ni cursivas. */
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        /* Al saltar a un ancla, la cabecera fija no tapa su principio. */
+        scroll-padding-top: var(--spacing-cabecera);
+    }
+
+    body {
+        min-height: 100dvh;
+        font-size: var(--text-cuerpo);
+        line-height: var(--text-cuerpo--line-height);
+        overflow-x: clip;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        text-wrap: balance;
+    }
+
+    p,
+    li {
+        text-wrap: pretty;
+    }
+
+    ::selection {
+        background-color: var(--color-texto);
+        color: var(--color-fondo);
+    }
+
+    /* Foco visible en todo lo interactivo: un marco nítido separado del elemento. */
+    :focus-visible {
+        outline: 2px solid var(--color-texto);
+        outline-offset: 3px;
+        border-radius: var(--radius-fino);
+    }
+
+    /* El contenedor principal recibe el foco al cambiar de página, pero no necesita marco. */
+    main:focus {
+        outline: none;
+    }
+
+    /*
+        SCROLL A LOS ANCLAS
+        Suave por CSS; con movimiento reducido, instantáneo.
+    */
+    @media (prefers-reduced-motion: no-preference) {
+        html {
+            scroll-behavior: smooth;
+        }
+    }
+
+    /*
+        MOVIMIENTO REDUCIDO
+        Todo quieto: sin transiciones ni animaciones. Los cambios de estado son instantáneos.
+    */
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            transition: none !important;
+            animation: none !important;
+        }
+    }
+}
+
+/*
+    Los controles que necesitan JavaScript solo aparecen cuando tema.js ha marcado <html>. La regla
+    va fuera de las capas para que gane a las utilidades de Tailwind (grid, flex...) del propio control.
+*/
+html:not(.js) .solo-js {
+    display: none;
+}
+
+@layer components {
+    /*
+        MÁSCARA DE LÍNEA
+        Envuelve una línea de texto que entra subiendo desde abajo. El relleno vertical (compensado
+        con un margen negativo) evita que la máscara corte los rasgos altos y bajos de las letras.
+    */
+    .linea-mascara {
+        display: block;
+        overflow: hidden;
+        padding-block: 0.08em;
+        margin-block: -0.08em;
+    }
+
+    /*
+        PROSA
+        Estilos del cuerpo de los casos de estudio, que viene de Markdown y no lleva clases.
+    */
+    .prosa {
+        max-width: var(--container-lectura);
+    }
+
+    .prosa > * + * {
+        margin-top: calc(var(--spacing) * 3);
+    }
+
+    /* Los apartados se separan por espacio, sin filete. */
+    .prosa h2 {
+        margin-top: calc(var(--spacing) * 8);
+        font-size: var(--text-titulo-3);
+        line-height: var(--text-titulo-3--line-height);
+        letter-spacing: var(--text-titulo-3--letter-spacing);
+    }
+
+    .prosa > h2:first-child {
+        margin-top: 0;
+    }
+
+    .prosa h3 {
+        margin-top: calc(var(--spacing) * 5);
+        font-size: var(--text-entradilla);
+        line-height: var(--text-entradilla--line-height);
+    }
+
+    .prosa p,
+    .prosa li {
+        color: var(--color-texto-suave);
+    }
+
+    /* Todo va en peso 400: lo destacado se distingue por color, no por grosor. */
+    .prosa strong {
+        color: var(--color-texto);
+        font-weight: var(--font-weight-normal);
+    }
+
+    .prosa a {
+        color: var(--color-texto);
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.2em;
+    }
+
+    .prosa ul,
+    .prosa ol {
+        padding-left: calc(var(--spacing) * 3);
+    }
+
+    .prosa ul {
+        list-style: disc;
+    }
+
+    .prosa ol {
+        list-style: decimal;
+    }
+
+    .prosa li + li {
+        margin-top: var(--spacing);
+    }
+
+    .prosa code {
+        padding: 0.1em 0.35em;
+        border-radius: var(--radius-fino);
+        background-color: var(--color-superficie);
+        color: var(--color-texto);
+        font-family: var(--font-mono);
+        font-size: 0.9em;
+    }
+}
+
+/*
+    TRANSICIONES ENTRE PÁGINAS (View Transitions API)
+    Cambiar de página es un movimiento mínimo: la vieja se apaga y la nueva entra con un fundido y
+    8 px de desplazamiento en 480 ms. Abrir un proyecto es un momento cinematográfico: la portada
+    de la tarjeta pulsada comparte nombre con la del caso de estudio y el navegador transforma una
+    en la otra en 1 s. Con movimiento reducido no hay transición: la página nueva aparece sin más.
+*/
+.portada-de-caso {
+    view-transition-name: portada;
+}
+
+@keyframes pagina-sale {
+    to {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    ::view-transition-old(root) {
+        animation: pagina-sale var(--duracion-media) var(--ease-salida) both;
+    }
+
+    ::view-transition-new(root) {
+        animation: var(--animate-aparecer);
+    }
+
+    ::view-transition-group(portada) {
+        animation-duration: var(--duracion-larga);
+        animation-timing-function: var(--ease-cine);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none;
+    }
+}

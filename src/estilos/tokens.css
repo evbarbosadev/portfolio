@@ -1,0 +1,232 @@
+/*
+    TOKENS DE DISEÑO
+    Este fichero es el único sitio donde se definen colores, tipografía, espacios, radios,
+    duraciones y curvas. Tailwind genera las utilidades a partir de aquí (bg-fondo, text-titular,
+    ease-salida, duracion-media...), así que en el resto del código no hay valores sueltos.
+
+    Los valores son los de la marca Vørlys: los tokens y las decisiones de su kit (la referencia
+    completa es el Design System «Vørlys»). Si la marca cambia, se cambia aquí. No se importa
+    vorlys.css tal cual por tres razones:
+    - cambia de tema con las clases .dark/.light, y esta web lo hace con data-tema (tema.js);
+    - su unidad de espacio es de 4 px y la de esta web de 8 px: con la suya, todos los márgenes
+      de los componentes se quedarían a la mitad;
+    - sus nombres están en inglés y los de esta web en español.
+
+    Equivalencias con vorlys.css:
+    bg → fondo · fg → texto · muted → texto-suave · line → linea · surface → superficie
+    surface-strong → superficie-fuerte · on-strong → sobre-fuerte · ink → tinta · paper → papel
+    display → titular · h2 → titulo-2 · h3 → titulo-3 · lead → entradilla · body → cuerpo
+    small → detalle · caption → leyenda · label → etiqueta
+    radius-sm/md/lg → fino/medio/grande · ease-vorlys → salida · ease-vorlys-cine → cine
+*/
+
+@theme static {
+    /* Se vacían las escalas por defecto de Tailwind: solo existen los tokens definidos aquí. */
+    --color-*: initial;
+    --font-*: initial;
+    --text-*: initial;
+    --tracking-*: initial;
+    --leading-*: initial;
+    --radius-*: initial;
+    --shadow-*: initial;
+    --ease-*: initial;
+    --animate-*: initial;
+    --breakpoint-*: initial;
+    --container-*: initial;
+
+    /*
+        COLOR
+        Monocromo neutro puro: el gris no lleva matiz, para no teñir las fotos que tiene al lado.
+        Los tokens semánticos eligen un valor para cada tema con light-dark(), que sigue a
+        color-scheme (ver base.css).
+    */
+    --color-tinta: #0a0a0a;
+    --color-papel: #ffffff;
+
+    --color-gris-50: #fafafa;
+    --color-gris-100: #f2f2f2;
+    --color-gris-200: #e6e6e6;
+    --color-gris-300: #cfcfcf;
+    --color-gris-400: #ababab;
+    --color-gris-500: #8a8a8a;
+    --color-gris-600: #6b6b6b;
+    --color-gris-700: #474747;
+    --color-gris-800: #2e2e2e;
+    --color-gris-850: #1f1f1f;
+    --color-gris-900: #141414;
+    --color-gris-950: #0a0a0a;
+
+    /* Fondo de la página y texto principal. */
+    --color-fondo: light-dark(var(--color-papel), var(--color-tinta));
+    --color-texto: light-dark(var(--color-tinta), var(--color-papel));
+
+    /* Texto secundario: entradillas, fechas, etiquetas. Contraste de 5:1 o más en los dos temas. */
+    --color-texto-suave: light-dark(var(--color-gris-600), var(--color-gris-500));
+
+    /* Borde de 1 px. Solo en botones secundarios y campos; nunca alrededor de fichas. */
+    --color-linea: light-dark(var(--color-gris-200), var(--color-gris-800));
+
+    /* Superficie leve, solo cuando una imagen clara se perdería sobre el fondo. */
+    --color-superficie: light-dark(var(--color-gris-50), var(--color-gris-900));
+
+    /* Bloque oscuro para enseñar fotos en los dos temas, y el texto que va encima. */
+    --color-superficie-fuerte: light-dark(var(--color-tinta), var(--color-gris-850));
+    --color-sobre-fuerte: var(--color-papel);
+
+    /*
+        TIPOGRAFÍA
+        Vørlys Sans para el texto y Geist Mono para lo técnico (etiquetas, código, datos). Todo en
+        peso 400: la jerarquía la da el tamaño. Las fuentes se declaran en base.css.
+    */
+    --font-sans: "Vørlys Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "Geist Mono", ui-monospace, "SF Mono", monospace;
+
+    --font-weight-normal: 400;
+
+    /*
+        Titular: el nombre del hero y el título de cada página. 72 px en escritorio; en móvil baja
+        hasta 48 px para que el nombre quepa sin partirse.
+    */
+    --text-titular: clamp(3rem, 10vw, 4.5rem);
+    --text-titular--line-height: 1.02;
+    --text-titular--letter-spacing: -0.03em;
+
+    /* Email de contacto: de 32 px a 56 px. Es lo más grande de su sección. */
+    --text-correo: clamp(2rem, 6vw, 3.5rem);
+    --text-correo--line-height: 1.1;
+    --text-correo--letter-spacing: -0.02em;
+
+    /* Título de sección: 32 px. */
+    --text-titulo-2: 2rem;
+    --text-titulo-2--line-height: 1.2;
+    --text-titulo-2--letter-spacing: -0.015em;
+
+    /* Título de ficha o de bloque: 24 px. */
+    --text-titulo-3: 1.5rem;
+    --text-titulo-3--line-height: 1.25;
+    --text-titulo-3--letter-spacing: -0.01em;
+
+    /* Entradilla: 20 px. */
+    --text-entradilla: 1.25rem;
+    --text-entradilla--line-height: 1.5;
+
+    /* Cuerpo: 16 px. */
+    --text-cuerpo: 1rem;
+    --text-cuerpo--line-height: 1.6;
+
+    /* Texto de apoyo: 14 px. */
+    --text-detalle: 0.875rem;
+    --text-detalle--line-height: 1.5;
+
+    /* Pie de foto y notas: 12 px. */
+    --text-leyenda: 0.75rem;
+    --text-leyenda--line-height: 1.4;
+
+    /* Etiquetas: 12 px, siempre con font-mono y en mayúsculas. */
+    --text-etiqueta: 0.75rem;
+    --text-etiqueta--line-height: 1.33;
+    --text-etiqueta--letter-spacing: 0.04em;
+
+    /*
+        ESPACIO
+        Retícula de 8 px: cada unidad de Tailwind vale 8 px (p-1 = 8 px, p-3 = 24 px); los 4 px de
+        la marca son medias unidades (p-0.5). Los tokens con nombre son fluidos entre móvil y
+        escritorio: la marca pide en móvil la mitad que en escritorio.
+    */
+    --spacing: 0.5rem;
+    /* Margen lateral: 20 px en móvil (390) y 64 px en escritorio (1440). */
+    --spacing-margen: clamp(1.25rem, 0.229rem + 4.19vw, 4rem);
+    /* Alto de la cabecera fija: 88 px. Las secciones dejan ese hueco al saltar a ellas. */
+    --spacing-cabecera: 5.5rem;
+    /* Aire entre secciones: de 48 px a 96 px. */
+    --spacing-seccion: clamp(3rem, 1.636rem + 6.818vw, 6rem);
+    /* Aire sobre el hero: de 64 px a 128 px. */
+    --spacing-hero: clamp(4rem, 1.273rem + 13.636vw, 8rem);
+
+    /*
+        Anchos máximos: el de la página (1280 px contando los márgenes, así que 1152 px de
+        contenido en escritorio) y el de lectura cómoda.
+    */
+    --container-pagina: 80rem;
+    --container-lectura: 42rem;
+
+    /* Puntos de corte. La retícula pasa de 4 a 6 y a 12 columnas. */
+    --breakpoint-tablet: 40rem;
+    --breakpoint-escritorio: 64rem;
+    --breakpoint-amplio: 90rem;
+
+    /* RADIOS. Esquinas suaves y nada de píldoras. Sin sombras en ningún sitio. */
+    --radius-fino: 0.25rem; /* Campos y elementos pequeños. */
+    --radius-medio: 0.5rem; /* Botones y bloques de código. */
+    --radius-grande: 0.75rem; /* Imágenes de proyecto y bloques grandes. */
+
+    /*
+        MOVIMIENTO: DURACIONES
+        El bloque es "static" para que todas las variables existan siempre en :root: el JavaScript
+        de movimiento (GSAP) lee de aquí duraciones y curvas, y así no hay una segunda copia.
+        breve: respuesta al ratón. media: fundido de todo lo que entra. larga: momentos
+        cinematográficos (titular del hero, imágenes de proyecto, abrir un proyecto).
+    */
+    --duracion-breve: 120ms;
+    --duracion-media: 480ms;
+    --duracion-larga: 1000ms;
+
+    /*
+        MOVIMIENTO: CURVAS
+        salida: casi todo; frena al final.
+        cine: los momentos cinematográficos; lenta en los dos extremos.
+    */
+    --ease-salida: cubic-bezier(0.2, 0, 0, 1);
+    --ease-cine: cubic-bezier(0.7, 0, 0.2, 1);
+
+    /*
+        MOVIMIENTO: ANIMACIONES DE ENTRADA
+        Son CSS puro para que arranquen con el primer pintado, sin esperar al JavaScript.
+        ranura: una línea de titular sube desde detrás de su máscara (cinematográfico).
+        aparecer: fundido con 8 px de desplazamiento (todo lo demás).
+        recorte: una imagen de proyecto se descubre de abajo arriba (cinematográfico).
+    */
+    --animate-ranura: ranura var(--duracion-larga) var(--ease-cine) both;
+    --animate-aparecer: aparecer var(--duracion-media) var(--ease-salida) both;
+    --animate-recorte: recorte var(--duracion-larga) var(--ease-cine) both;
+
+    @keyframes ranura {
+        from {
+            transform: translateY(105%);
+        }
+    }
+
+    @keyframes aparecer {
+        from {
+            opacity: 0;
+            transform: translateY(0.5rem);
+        }
+    }
+
+    @keyframes recorte {
+        from {
+            clip-path: inset(100% 0 0 0);
+        }
+    }
+}
+
+/* Utilidades duracion-breve, duracion-media... y retraso-* para escalonar entradas. */
+@utility duracion-* {
+    transition-duration: --value(--duracion-*);
+}
+
+@utility retraso-* {
+    animation-delay: --value(--duracion-*);
+}
+
+/*
+    MOVIMIENTO REDUCIDO
+    Con prefers-reduced-motion no se mueve nada: todo aparece ya en su sitio.
+*/
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --animate-ranura: none;
+        --animate-aparecer: none;
+        --animate-recorte: none;
+    }
+}

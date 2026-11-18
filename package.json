@@ -1,0 +1,52 @@
+{
+    "name": "portfolio",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "packageManager": "pnpm@12.21.0",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite-ssg build",
+        "preview": "vite preview",
+        "lint": "eslint .",
+        "format": "prettier --write .",
+        "typecheck": "vue-tsc --noEmit",
+        "test": "playwright test",
+        "lighthouse": "lhci autorun"
+    },
+    "dependencies": {
+        "@unhead/vue": "^2.1.17",
+        "gsap": "^3.15.1",
+        "vue": "^3.5.45",
+        "vue-router": "^5.5.1"
+    },
+    "devDependencies": {
+        "@axe-core/playwright": "^4.14.0",
+        "@eslint/js": "^10.0.1",
+        "@fontsource-variable/geist-mono": "^5.3.0",
+        "@iconify-json/solar": "^1.2.16",
+        "@lhci/cli": "^0.16.1",
+        "@playwright/test": "^1.65.1",
+        "@resvg/resvg-js": "^2.6.2",
+        "@tailwindcss/vite": "^4.3.5",
+        "@types/node": "^26.6.6",
+        "@vitejs/plugin-vue": "^6.0.11",
+        "eslint": "^10.15.0",
+        "eslint-plugin-vue": "^10.12.1",
+        "gray-matter": "^4.0.3",
+        "prettier": "^3.10.1",
+        "prettier-plugin-tailwindcss": "^0.8.1",
+        "satori": "^0.63.2",
+        "tailwindcss": "^4.3.5",
+        "typescript": "~6.0.3",
+        "typescript-eslint": "^8.72.2",
+        "unplugin-icons": "^24.0.0",
+        "unplugin-vue-markdown": "^32.1.1",
+        "vite": "^8.3.8",
+        "vite-imagetools": "^12.0.2",
+        "vite-ssg": "^28.3.0",
+        "vite-ssg-sitemap": "^0.10.0",
+        "vue-tsc": "^3.3.14",
+        "zod": "^4.6.7"
+    }
+}

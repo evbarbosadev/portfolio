@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  comprobar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # pnpm sale de "packageManager" en package.json y Node de .nvmrc.
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Formato
+        run: pnpm exec prettier --check .
+
+      - name: Tipos
+        run: pnpm typecheck
+
+      - name: Build
+        run: pnpm build
+
+      # Los tests y Lighthouse usan el Chrome que ya trae el runner.
+      - name: Tests
+        run: pnpm test
+
+      - name: Lighthouse CI
+        run: pnpm lighthouse

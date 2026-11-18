@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./base.css";
+
+/*
+    Variante dark: se activa con data-tema="oscuro" en <html>, no con la media query, para que
+    el interruptor manual funcione. Los colores ya cambian solos con los tokens; esta variante
+    queda para los casos sueltos en los que un tema necesite algo distinto.
+*/
+@custom-variant dark (&:where([data-tema="oscuro"], [data-tema="oscuro"] *));

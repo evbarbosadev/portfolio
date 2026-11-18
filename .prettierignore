@@ -1,0 +1,11 @@
+dist
+node_modules
+pnpm-lock.yaml
+playwright-report
+test-results
+.lighthouseci
+.vite-ssg-temp
+src/constantes.ts
+.impeccable
+marca
+vorlys-sans

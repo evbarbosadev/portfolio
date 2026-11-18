@@ -1,0 +1,16 @@
+node_modules
+dist
+.vite-ssg-temp
+*.local
+.firebase
+firebase-debug.log
+playwright-report
+test-results
+.lighthouseci
+.impeccable
+.claude
+
+# Kit de marca de Vørlys: repo privado aparte (vorlys/marca), clonado aquí
+marca/
+# Los CV se sirven en la web, pero no se publican en el repo
+public/cv-*.pdf
