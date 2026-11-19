@@ -105,14 +105,6 @@ export const esquemaSitio = z.strictObject({
     usuarioInstagram: texto,
 });
 
-export const esquemaFotos = z.array(
-    z.strictObject({
-        // Sin archivo, la foto está pendiente y la web pinta su hueco.
-        archivo: texto.optional(),
-        alt: porIdioma(),
-    }),
-);
-
 /**
  * Secciones que tiene que tener el cuerpo de un caso de estudio, como títulos de segundo nivel
  * ("## Problema"), si se divide en secciones; un cuerpo sin ningún título es texto libre.
@@ -127,4 +119,3 @@ export type Proyecto = z.infer<typeof esquemaProyecto>;
 export type Experimento = z.infer<typeof esquemaExperimento>;
 export type Experiencia = z.infer<typeof esquemaExperiencia>;
 export type DatosDelSitio = z.infer<typeof esquemaSitio>;
-export type Foto = z.infer<typeof esquemaFotos>[number];

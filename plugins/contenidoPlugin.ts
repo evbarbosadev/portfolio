@@ -7,7 +7,6 @@ import { IDIOMAS, type Idioma } from "../src/constantes.ts";
 import {
     esquemaExperiencia,
     esquemaExperimento,
-    esquemaFotos,
     esquemaProyecto,
     esquemaSitio,
     SECCIONES_DE_CASO,
@@ -15,7 +14,6 @@ import {
     type Experimento,
     type Proyecto,
 } from "../src/contenido/esquemas.ts";
-import { fotos } from "../src/contenido/fotografia.ts";
 import { sitio } from "../src/contenido/sitio.ts";
 
 /*
@@ -30,11 +28,9 @@ const CARPETA_CONTENIDO = "src/contenido";
 const COLECCION_PROYECTOS = "proyectos";
 const COLECCION_LABORATORIO = "laboratorio";
 const COLECCION_EXPERIENCIA = "experiencia";
-const CARPETA_FOTOS = "fotografia";
 
-// Anchos que se generan de cada imagen. Las portadas llegan a ocupar el ancho de la página; las fotos no.
+// Anchos que se generan de cada portada: llegan a ocupar el ancho de la página.
 const ANCHOS_DE_PORTADA = "480;960;1440;1920";
-const ANCHOS_DE_FOTO = "360;720;1080";
 const FORMATOS_DE_IMAGEN = "avif;webp;jpg";
 
 /** Una entrada de una colección: un fichero Markdown ya validado. */
@@ -61,20 +57,6 @@ export function leerContenido(raiz: string, hayQueIncluirBorradores: boolean): C
 
     // Datos que viven en ficheros TypeScript: el tipo ya los comprueba, zod añade formatos y longitudes.
     validarDatos(esquemaSitio, sitio, `${CARPETA_CONTENIDO}/sitio.ts`, errores);
-    validarDatos(esquemaFotos, fotos, `${CARPETA_CONTENIDO}/fotografia.ts`, errores);
-
-    for (const foto of fotos) {
-        // Una foto sin archivo está pendiente: la web pinta su hueco con una etiqueta.
-        if (!foto.archivo) {
-            continue;
-        }
-
-        const ruta = `${CARPETA_CONTENIDO}/${CARPETA_FOTOS}/${foto.archivo}`;
-
-        if (!existsSync(join(raiz, ruta))) {
-            errores.push(`${CARPETA_CONTENIDO}/fotografia.ts\n✖ No existe la imagen ${ruta}`);
-        }
-    }
 
     const proyectos = leerColeccion(
         raiz,
@@ -259,11 +241,6 @@ function generarModulo(contenido: ContenidoLeido): string {
         return `{ ...${JSON.stringify({ id, ...resto })}, portada: ${portadaCargada}, medios: [${medios.map(imagenConAlt).join(", ")}] }`;
     });
 
-    const fotosCargadas = fotos.map(
-        (foto) =>
-            `{ imagen: ${foto.archivo ? importarImagen(`${CARPETA_CONTENIDO}/${CARPETA_FOTOS}/${foto.archivo}`, ANCHOS_DE_FOTO) : "undefined"}, alt: ${JSON.stringify(foto.alt)} }`,
-    );
-
     const experimentos = contenido.experimentos.map(({ id, datos }) =>
         JSON.stringify({ id, ...datos }),
     );
@@ -279,7 +256,6 @@ function generarModulo(contenido: ContenidoLeido): string {
         `export const proyectos = [${proyectos.join(", ")}];`,
         `export const experimentos = [${experimentos.join(", ")}];`,
         `export const experiencias = [${experiencias.join(", ")}];`,
-        `export const fotos = [${fotosCargadas.join(", ")}];`,
     ].join("\n");
 }
 

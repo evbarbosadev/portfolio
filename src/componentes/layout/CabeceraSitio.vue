@@ -3,7 +3,7 @@ import { computed, useTemplateRef } from "vue";
 import { useEnlaceASeccion } from "@/composables/useEnlaceASeccion";
 import { useSeccionActiva } from "@/composables/useSeccionActiva";
 import { useTextos } from "@/composables/useTextos";
-import { ANCLA_CONTACTO, ANCLA_FOTOGRAFIA, ANCLA_PROYECTOS, ANCLA_SOBRE_MI } from "@/constantes";
+import { ANCLA_CONTACTO, ANCLA_PROYECTOS, ANCLA_SOBRE_MI } from "@/constantes";
 import IdiomaSelector from "./IdiomaSelector.vue";
 import TemaToggle from "./TemaToggle.vue";
 
@@ -11,14 +11,13 @@ const { t } = useTextos();
 const { getHrefDeSeccion, irASeccion } = useEnlaceASeccion();
 const menuMovil = useTemplateRef<HTMLElement>("menuMovil");
 
-const ANCLAS = [ANCLA_PROYECTOS, ANCLA_FOTOGRAFIA, ANCLA_SOBRE_MI, ANCLA_CONTACTO];
+const ANCLAS = [ANCLA_PROYECTOS, ANCLA_SOBRE_MI, ANCLA_CONTACTO];
 const { seccionActiva } = useSeccionActiva(ANCLAS);
 
 // Las secciones de la página principal, enlazables desde cualquier página. Sin nombre ni logo:
 // el nombre está en el hero.
 const enlaces = computed(() => [
     { ancla: ANCLA_PROYECTOS, texto: t("navegacion.proyectos") },
-    { ancla: ANCLA_FOTOGRAFIA, texto: t("navegacion.fotografia") },
     { ancla: ANCLA_SOBRE_MI, texto: t("navegacion.sobreMi") },
     { ancla: ANCLA_CONTACTO, texto: t("navegacion.contacto") },
 ]);

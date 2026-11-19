@@ -2,7 +2,6 @@
     Tipos del módulo virtual que genera plugins/contenidoPlugin.ts con el contenido ya validado.
 */
 declare module "virtual:contenido" {
-    import type { Idioma } from "@/constantes";
     import type { Experiencia, Experimento, Proyecto } from "@/contenido/esquemas";
 
     /** Imagen procesada por vite-imagetools: un srcset por formato y la imagen de respaldo con su tamaño. */
@@ -28,14 +27,7 @@ declare module "virtual:contenido" {
 
     export type ExperienciaCargada = Experiencia & { id: string };
 
-    export interface FotoCargada {
-        /** Sin imagen todavía: se pinta su hueco. */
-        imagen?: ImagenProcesada;
-        alt: Record<Idioma, string>;
-    }
-
     export const proyectos: ProyectoCargado[];
     export const experimentos: ExperimentoCargado[];
     export const experiencias: ExperienciaCargada[];
-    export const fotos: FotoCargada[];
 }

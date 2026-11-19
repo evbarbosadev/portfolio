@@ -8,7 +8,6 @@ const diccionario: DiccionarioParcial = {
     comun: {
         pestañaNueva: "(opens in a new tab)",
         portadaPendiente: "Cover pending",
-        fotoPendiente: "Photo pending",
     },
     navegacion: {
         etiqueta: "Main navigation",
@@ -17,7 +16,6 @@ const diccionario: DiccionarioParcial = {
         menu: "Menu",
         inicio: "Home",
         proyectos: "Projects",
-        fotografia: "Photography",
         sobreMi: "About",
         contacto: "Contact",
     },
@@ -57,11 +55,6 @@ const diccionario: DiccionarioParcial = {
         desde: "since",
         stack: "Stack",
         tambien: "Also",
-    },
-    fotografia: {
-        titulo: "Photography",
-        etiqueta: "Selection",
-        instagram: "More on Instagram",
     },
     contacto: {
         titulo: "Contact",

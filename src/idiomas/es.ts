@@ -7,7 +7,6 @@ export default {
         pestañaNueva: "(se abre en una pestaña nueva)",
         // Etiqueta del hueco de una imagen que aún no existe: «Portada pendiente · Vørlys».
         portadaPendiente: "Portada pendiente",
-        fotoPendiente: "Foto pendiente",
     },
     navegacion: {
         etiqueta: "Navegación principal",
@@ -16,7 +15,6 @@ export default {
         menu: "Menú",
         inicio: "Inicio",
         proyectos: "Proyectos",
-        fotografia: "Fotografía",
         sobreMi: "Sobre mí",
         contacto: "Contacto",
     },
@@ -59,11 +57,6 @@ export default {
         desde: "desde",
         stack: "Stack",
         tambien: "También",
-    },
-    fotografia: {
-        titulo: "Fotografía",
-        etiqueta: "Selección",
-        instagram: "Más en Instagram",
     },
     contacto: {
         titulo: "Contacto",

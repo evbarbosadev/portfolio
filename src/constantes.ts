@@ -25,7 +25,6 @@ export const RUTA_NO_ENCONTRADA = "no-encontrada";
 export const ANCLA_PROYECTOS   = "proyectos";
 export const ANCLA_LABORATORIO = "laboratorio";
 export const ANCLA_SOBRE_MI    = "sobre-mi";
-export const ANCLA_FOTOGRAFIA  = "fotografia";
 export const ANCLA_CONTACTO    = "contacto";
 export const ANCLA_CONTENIDO   = "contenido";
 

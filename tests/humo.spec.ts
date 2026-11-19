@@ -13,8 +13,8 @@ import {
 
 const RUTAS = getRutasDelSitio();
 
-const SECCIONES_DE_INICIO = ["proyectos", "fotografia", "laboratorio", "sobre-mi", "contacto"];
-const SECCIONES_DE_LA_NAVEGACION = ["proyectos", "fotografia", "sobre-mi", "contacto"];
+const SECCIONES_DE_INICIO = ["proyectos", "laboratorio", "sobre-mi", "contacto"];
+const SECCIONES_DE_LA_NAVEGACION = ["proyectos", "sobre-mi", "contacto"];
 
 test.describe("rutas", () => {
     for (const ruta of RUTAS) {
@@ -136,9 +136,9 @@ test.describe("estructura de la página principal", () => {
         const menu = page.locator("#menu-movil");
         await expect(menu).toBeVisible();
 
-        await menu.getByRole("link", { name: "Fotografía" }).click();
+        await menu.getByRole("link", { name: "Sobre mí" }).click();
         await expect(menu).toBeHidden();
-        await expect(page.locator("#fotografia h2")).toBeFocused();
+        await expect(page.locator("#sobre-mi h2")).toBeFocused();
         await expect(page).toHaveURL(/\/$/);
     });
 
@@ -173,10 +173,10 @@ test.describe("estructura de la página principal", () => {
 
         await page.goto("/proyectos/vorlys");
         await esperarHidratacion(page);
-        await page.locator("header nav").getByRole("link", { name: "Fotografía" }).click();
+        await page.locator("header nav").getByRole("link", { name: "Sobre mí" }).click();
 
         await expect(page).toHaveURL(/\/$/);
-        await expect(page.locator("#fotografia h2")).toBeInViewport();
+        await expect(page.locator("#sobre-mi h2")).toBeInViewport();
     });
 
     test("el primer elemento con foco es el enlace para saltar al contenido", async ({

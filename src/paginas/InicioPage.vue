@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import ContactoSection from "@/componentes/secciones/ContactoSection.vue";
-import FotografiaSection from "@/componentes/secciones/FotografiaSection.vue";
 import HeroSection from "@/componentes/secciones/HeroSection.vue";
 import LaboratorioSection from "@/componentes/secciones/LaboratorioSection.vue";
 import ProyectosSection from "@/componentes/secciones/ProyectosSection.vue";
@@ -55,7 +54,6 @@ useCabecera(() => ({
     <!-- La página principal es una sola página que se recorre con scroll, sección a sección. -->
     <HeroSection />
     <ProyectosSection />
-    <FotografiaSection />
     <LaboratorioSection />
     <SobreMiSection />
     <ContactoSection />
