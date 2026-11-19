@@ -19,8 +19,8 @@ export const sitio: DatosDelSitio = {
     },
     // El lema es el titular del hero. Se escribe en dos golpes, con una pausa entre ellos.
     lema: {
-        es: ["Me gusta que las cosas funcionen bien", "y se vean bien."],
-        en: ["I like things to work well", "and look good."],
+        es: ["Funciona bien.", "Se ve bien."],
+        en: ["Works well.", "Looks good."],
     },
     // Bloque de texto corto de la sección «Sobre mí». Un salto de línea separa párrafos.
     sobreMi: {
