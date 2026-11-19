@@ -6,6 +6,7 @@ import { useHead } from "@unhead/vue";
 import { nextTick } from "vue";
 import { useRouter } from "vue-router";
 import CabeceraSitio from "@/componentes/layout/CabeceraSitio.vue";
+import LuzDeFondo from "@/componentes/layout/LuzDeFondo.vue";
 import PieSitio from "@/componentes/layout/PieSitio.vue";
 import SaltarContenido from "@/componentes/layout/SaltarContenido.vue";
 import { useAnalitica } from "@/composables/useAnalitica";
@@ -82,6 +83,7 @@ function setListeners() {
 </script>
 
 <template>
+    <LuzDeFondo />
     <SaltarContenido />
     <CabeceraSitio />
     <main :id="ANCLA_CONTENIDO" tabindex="-1">

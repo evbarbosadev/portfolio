@@ -298,6 +298,121 @@ html:not(.js) .solo-js {
         font-family: var(--font-mono);
         font-size: 0.9em;
     }
+
+    /*
+        LUZ DE FONDO
+        Tres luces redondas quietas detrás de todo, cada una flotando muy despacio por su cuenta
+        (de 28 a 44 s, ida y vuelta, con ritmos distintos para que nunca se repita igual). No
+        dependen del scroll ni del cursor. En el tema claro son sombra en vez de luz, a la mitad.
+        La cabecera es opaca y lleva su propia copia recortada a su altura (LuzDeFondo.vue con
+        «soloCabecera»); las dos empiezan a la vez, así que van sincronizadas.
+    */
+    .luz-de-fondo {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .luz-de-fondo--cabecera {
+        clip-path: inset(0 0 calc(100% - var(--spacing-cabecera)) 0);
+    }
+
+    /*
+        Grano de película encima de las luces: rompe las bandas de los degradados oscuros y le da
+        textura a la luz. Va en «overlay», que multiplica sobre lo oscuro: en el negro apenas se
+        nota y aparece donde hay luz. Para que se fusione con el fondo y no con un vacío, la capa
+        de luces lleva el color de fondo debajo.
+    */
+    .luz-de-fondo {
+        background-color: var(--color-fondo);
+    }
+
+    .luz-de-fondo::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0.15;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /*
+        La luz cae como una campana (gaussiana) hasta apagarse en el 70 % del radio, que es el borde
+        de la caja: sin núcleo marcado ni cambios bruscos de pendiente, el círculo no se adivina.
+    */
+    .luz-de-fondo span {
+        --color-luz: light-dark(rgb(0 0 0 / 0.035), rgb(255 255 255 / 0.075));
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(
+            circle,
+            var(--color-luz) 0%,
+            color-mix(in srgb, var(--color-luz) 89%, transparent) 11.7%,
+            color-mix(in srgb, var(--color-luz) 63%, transparent) 23.3%,
+            color-mix(in srgb, var(--color-luz) 36%, transparent) 35%,
+            color-mix(in srgb, var(--color-luz) 15%, transparent) 46.7%,
+            color-mix(in srgb, var(--color-luz) 4.5%, transparent) 58.3%,
+            transparent 70%
+        );
+    }
+
+    .luz-de-fondo span:nth-child(1) {
+        top: -38vmax;
+        left: -26vmax;
+        width: 80vmax;
+        height: 80vmax;
+    }
+
+    .luz-de-fondo span:nth-child(2) {
+        right: -28vmax;
+        bottom: -40vmax;
+        width: 70vmax;
+        height: 70vmax;
+        opacity: 0.85;
+    }
+
+    .luz-de-fondo span:nth-child(3) {
+        top: 34%;
+        left: 44%;
+        width: 44vmax;
+        height: 44vmax;
+        opacity: 0.45;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .luz-de-fondo span {
+            will-change: transform;
+            animation: 36s ease-in-out infinite alternate deriva-de-luz-1;
+        }
+
+        .luz-de-fondo span:nth-child(2) {
+            animation: 44s ease-in-out infinite alternate deriva-de-luz-2;
+        }
+
+        .luz-de-fondo span:nth-child(3) {
+            animation: 28s ease-in-out infinite alternate deriva-de-luz-3;
+        }
+    }
+
+    @keyframes deriva-de-luz-1 {
+        to {
+            transform: translate(28vw, 22vh) scale(1.12);
+        }
+    }
+
+    @keyframes deriva-de-luz-2 {
+        to {
+            transform: translate(-30vw, -26vh) scale(0.92);
+        }
+    }
+
+    @keyframes deriva-de-luz-3 {
+        to {
+            transform: translate(-36vw, 18vh) scale(1.25);
+        }
+    }
 }
 
 /*

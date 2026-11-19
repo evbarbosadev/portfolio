@@ -5,6 +5,7 @@ import { useSeccionActiva } from "@/composables/useSeccionActiva";
 import { useTextos } from "@/composables/useTextos";
 import { ANCLA_CONTACTO, ANCLA_PROYECTOS, ANCLA_SOBRE_MI } from "@/constantes";
 import IdiomaSelector from "./IdiomaSelector.vue";
+import LuzDeFondo from "./LuzDeFondo.vue";
 import TemaToggle from "./TemaToggle.vue";
 
 const { t } = useTextos();
@@ -33,6 +34,7 @@ function irDesdeMenu(evento: MouseEvent, ancla: string) {
 
 <template>
     <header class="sticky top-0 z-40 bg-fondo">
+        <LuzDeFondo solo-cabecera />
         <div
             class="mx-auto flex h-cabecera max-w-pagina items-center justify-between gap-3 px-margen text-detalle text-texto-suave"
         >
