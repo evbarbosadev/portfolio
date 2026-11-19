@@ -5,18 +5,20 @@ import type { TokensDeMovimiento } from "./tokens";
 /*
     Revelados al hacer scroll. Los elementos se marcan en las plantillas con data-revelar y aquí
     se les da su entrada, según las reglas de movimiento de la marca:
-    - "bloque": todo lo que no es una imagen de proyecto (títulos, textos, fichas, fotos). Fundido
-      con 8 px de desplazamiento en 480 ms.
-    - "imagen": imágenes de proyecto. Momento cinematográfico: se descubren con un recorte de
-      abajo arriba en 1 s. El marco no cambia de tamaño.
+    - "bloque": todo lo que no es una imagen de proyecto (títulos, textos, fichas, fotos). Llega
+      desde el fondo: aparece desenfocado y se enfoca en 480 ms, sin moverse de su sitio.
+    - "imagen": imágenes de proyecto. Momento cinematográfico: el mismo gesto, más marcado y en
+      1 s. El marco no cambia de tamaño ni de sitio.
+    Es el mismo gesto con el que aparecen las letras del lema del hero (decisión 19).
 */
 
 // El elemento empieza a revelarse cuando su borde superior cruza el 88 % de la altura de la ventana.
 const INICIO_DE_REVELADO = "top 88%";
 // Separación, en segundos, entre un elemento y el siguiente cuando entran en grupo.
 const ESCALONADO = 0.06;
-// Distancia en píxeles que sube un bloque al aparecer.
-const DESPLAZAMIENTO_DE_BLOQUE = 8;
+// Desenfoque del que parte cada tipo al aparecer: más en las imágenes, que son más grandes.
+const DESENFOQUE_DE_BLOQUE = "blur(6px)";
+const DESENFOQUE_DE_IMAGEN = "blur(16px)";
 
 /**
  * Busca los elementos de un tipo que quedan por debajo de la ventana. Solo esos se ocultan para
@@ -29,7 +31,7 @@ function buscarPorRevelar(tipo: string): HTMLElement[] {
 }
 
 /**
- * Bloques: aparecen subiendo 8 px. Los que entran a la vez lo hacen escalonados.
+ * Bloques: aparecen desenfocados y se enfocan. Los que entran a la vez lo hacen escalonados.
  */
 function revelarBloques(tokens: TokensDeMovimiento) {
     const bloques = buscarPorRevelar("bloque");
@@ -39,7 +41,7 @@ function revelarBloques(tokens: TokensDeMovimiento) {
         return;
     }
 
-    gsap.set(bloques, { opacity: 0, y: DESPLAZAMIENTO_DE_BLOQUE });
+    gsap.set(bloques, { opacity: 0, filter: DESENFOQUE_DE_BLOQUE });
 
     ScrollTrigger.batch(bloques, {
         start: INICIO_DE_REVELADO,
@@ -47,30 +49,31 @@ function revelarBloques(tokens: TokensDeMovimiento) {
         onEnter: (lote) => {
             gsap.to(lote, {
                 opacity: 1,
-                y: 0,
+                filter: "blur(0px)",
                 duration: tokens.media,
                 ease: tokens.salida,
                 stagger: ESCALONADO,
-                clearProps: "opacity,transform",
+                clearProps: "opacity,filter",
             });
         },
     });
 }
 
 /**
- * Imágenes de proyecto: el marco recorta la imagen y la va descubriendo de abajo arriba.
+ * Imágenes de proyecto: aparecen desenfocadas y se enfocan, con la curva cinematográfica.
  */
 function revelarImagenes(tokens: TokensDeMovimiento) {
     for (const marco of buscarPorRevelar("imagen")) {
         gsap.fromTo(
             marco,
-            { clipPath: "inset(100% 0% 0% 0%)" },
+            { opacity: 0, filter: DESENFOQUE_DE_IMAGEN },
             {
-                clipPath: "inset(0% 0% 0% 0%)",
+                opacity: 1,
+                filter: "blur(0px)",
                 duration: tokens.larga,
                 ease: tokens.cine,
                 scrollTrigger: { trigger: marco, start: INICIO_DE_REVELADO, once: true },
-                clearProps: "clipPath",
+                clearProps: "opacity,filter",
             },
         );
     }
