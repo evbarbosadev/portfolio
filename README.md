@@ -6,6 +6,7 @@ Mi web personal: [evbarbosadev.web.app](https://evbarbosadev.web.app). Una pági
 
 - **Estática y sin depender de JavaScript.** Cada ruta se genera como HTML ya renderizado. El movimiento es una capa añadida y con `prefers-reduced-motion` no se descarga.
 - **Mi propia marca.** Los colores, los espacios, el movimiento y la tipografía (Vørlys Sans, derivada de Schibsted Grotesk) salen de Vørlys. Los tokens están en `src/estilos/tokens.css`.
+- **Escrita con Claude Code.** El diseño y los textos son míos; el código lo escribe Claude Code siguiendo mis pautas de programación, y lo reviso yo. Por eso, los nombres y los comentarios, por ejemplo, están en español.
 - **Contenido validado.** Los textos son Markdown y se validan con zod al compilar: si falta un dato, el build se para y dice dónde.
 - **Comprobado en cada push.** Tests de humo y accesibilidad con Playwright y axe, y Lighthouse CI con umbrales: rendimiento ≥ 90; accesibilidad, buenas prácticas y SEO ≥ 95.
 
