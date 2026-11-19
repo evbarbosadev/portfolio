@@ -76,7 +76,6 @@ export default {
     caso: {
         volver: "Todos los proyectos",
         ficha: "Ficha del proyecto",
-        rol: "Rol",
         periodo: "Periodo",
         estado: "Estado",
         stack: "Stack",

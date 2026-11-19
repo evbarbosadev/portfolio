@@ -106,7 +106,6 @@ useCabecera(() => {
             <RejillaPagina class="mt-10 gap-y-8">
                 <aside class="col-span-full escritorio:col-span-4" :aria-label="t('caso.ficha')">
                     <dl>
-                        <DatoDeFicha :etiqueta="t('caso.rol')">{{ proyecto.rol }}</DatoDeFicha>
                         <DatoDeFicha :etiqueta="t('caso.periodo')">{{
                             proyecto.periodo
                         }}</DatoDeFicha>

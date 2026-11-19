@@ -4,7 +4,6 @@ slug: vorlys
 idioma: es
 resumen: "Mi marca: nombre, símbolo y sistema de diseño, con una tipografía propia que lleva dentro la geometría del símbolo. Esta web está hecha con ella."
 rama: "Marca"
-rol: "[POR RELLENAR: tu rol en el proyecto]"
 periodo: "2026"
 estado: activo
 stack:

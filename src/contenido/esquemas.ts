@@ -47,7 +47,6 @@ export const esquemaProyecto = z.strictObject({
     resumen: texto.max(LONGITUD_MAX_RESUMEN),
     /** Área del proyecto (Software, Marca, Web...). Va en la etiqueta de la tarjeta, junto al periodo. */
     rama: texto,
-    rol: texto,
     periodo: texto,
     estado: z.enum(ESTADOS_DE_PROYECTO),
     stack: z.array(texto).min(1),

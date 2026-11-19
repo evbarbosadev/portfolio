@@ -4,7 +4,6 @@ slug: this-portfolio
 idioma: en
 resumen: "The site you're looking at. My own design, system and code: Vue 3, Vite and Tailwind, statically generated so it loads fast on any phone."
 rama: "Web"
-rol: "[POR RELLENAR: tu rol en el proyecto]"
 periodo: "2026"
 estado: activo
 stack:

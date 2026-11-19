@@ -74,7 +74,6 @@ const diccionario: DiccionarioParcial = {
     caso: {
         volver: "All projects",
         ficha: "Project details",
-        rol: "Role",
         periodo: "Period",
         estado: "Status",
         stack: "Stack",

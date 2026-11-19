@@ -4,7 +4,6 @@ slug: app-mensajeria-android
 idioma: es
 resumen: "Mensajería con cifrado de extremo a extremo y eventos con ubicación que se sincronizan entre los dos participantes. Java, Firebase e interfaces XML hechas a mano."
 rama: "Android"
-rol: "[POR RELLENAR: tu rol en el proyecto]"
 periodo: "DAM"
 estado: activo
 stack:

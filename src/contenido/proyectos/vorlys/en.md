@@ -4,7 +4,6 @@ slug: vorlys
 idioma: en
 resumen: "My brand: name, symbol and design system, with a custom typeface that carries the symbol's geometry. This site is set in it."
 rama: "Brand"
-rol: "[POR RELLENAR: tu rol en el proyecto]"
 periodo: "2026"
 estado: activo
 stack:

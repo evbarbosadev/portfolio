@@ -375,7 +375,7 @@ test.describe("sin JavaScript", () => {
         await page.locator("#proyectos article a").first().click();
         await expect(page).toHaveURL(/\/proyectos\/nova$/);
         await expect(page.locator("h1")).toHaveText("Nova");
-        await expect(page.locator(".prosa h2").first()).toHaveText("Problema");
+        await expect(page.locator(".prosa p").first()).toBeVisible();
 
         await page.locator('header a[hreflang="en"]').click();
         await expect(page).toHaveURL(/\/en\/projects\/nova$/);

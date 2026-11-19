@@ -30,7 +30,7 @@ export const sitio: DatosDelSitio = {
     enlaces: {
         linkedin: "https://www.linkedin.com/in/evbarbosadev/",
         github: "https://github.com/evbarbosadev",
-        instagram: "[POR RELLENAR: URL de Instagram]",
+        instagram: "https://www.instagram.com/viny.vision/",
     },
     usuarioInstagram: "viny.visiøn",
 };

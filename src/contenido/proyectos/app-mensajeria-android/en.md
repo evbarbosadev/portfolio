@@ -4,7 +4,6 @@ slug: android-messaging-app
 idioma: en
 resumen: "Messaging with end-to-end encryption and location-based events synced between both participants. Java, Firebase and hand-built XML interfaces."
 rama: "Android"
-rol: "[POR RELLENAR: tu rol en el proyecto]"
 periodo: "DAM"
 estado: activo
 stack:
