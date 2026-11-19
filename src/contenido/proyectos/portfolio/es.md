@@ -2,7 +2,7 @@
 titulo: "Este portfolio"
 slug: este-portfolio
 idioma: es
-resumen: "La web que estás viendo. Diseño, sistema y código propios: Vue 3, Vite y Tailwind, generada estática para que cargue rápido en cualquier móvil."
+resumen: "La web que estás viendo. Diseño y textos míos, código escrito con Claude Code siguiendo mis pautas: Vue 3, Vite y Tailwind, generada estática para que cargue rápido en cualquier móvil."
 rama: "Web"
 periodo: "2026"
 estado: activo
@@ -13,24 +13,14 @@ stack:
     - "Tailwind CSS"
     - "GSAP"
 enlaces:
-    repo: "[POR RELLENAR: URL del repositorio]"
+    repo: "https://github.com/evbarbosadev/portfolio"
 destacado: true
 orden: 3
 borrador: false
 ---
 
-## Problema
+Llevaba años con la idea de hacerme un portfolio, pero no tenía experiencia ni proyectos que enseñar. Ahora los tengo, y aunque tengo menos tiempo que nunca, puedo hacerlo más rápido sin perder el control de cada detalle. Quería una web que dejara clara una idea: me gusta lo que hago y me gusta hacerlo bien.
 
-[POR RELLENAR: qué problema resuelve y para quién]
+Lo que más me costó fue definir el diseño. Sigue mi marca, Vørlys: blanco y negro, todo en peso 400 y movimiento solo donde lo merece.
 
-## Qué hice yo
-
-[POR RELLENAR: tu parte concreta en el proyecto]
-
-## Decisiones técnicas
-
-[POR RELLENAR: dos o tres decisiones y por qué las tomaste]
-
-## Resultado
-
-[POR RELLENAR: resultado o estado actual, sin cifras inventadas]
+El reparto fue claro. El diseño y los textos son míos. El código lo ha escrito Claude Code siguiendo mis pautas de programación, para que se lea bien y sea fácil de depurar, y yo he revisado que todo estuviera bien. Está hecha con Vue 3, Vite y Tailwind, y se genera estática para que cargue rápido en cualquier móvil y se pueda leer incluso sin JavaScript.
