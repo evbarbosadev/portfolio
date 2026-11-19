@@ -130,15 +130,99 @@ html:not(.js) .solo-js {
 
 @layer components {
     /*
-        MÁSCARA DE LÍNEA
-        Envuelve una línea de texto que entra subiendo desde abajo. El relleno vertical (compensado
-        con un margen negativo) evita que la máscara corte los rasgos altos y bajos de las letras.
+        HERO ESCRITO
+        Un cursor de editor escribe el lema (HeroSection.vue marca cada letra con «tecleada») y al
+        acabar salen el nombre y los botones. Sin JavaScript o con movimiento reducido no se
+        esconde nada. Con JavaScript, tema.js marca <html> con «js» antes del primer pintado, así
+        que lo escondido no llega a verse.
     */
-    .linea-mascara {
-        display: block;
-        overflow: hidden;
-        padding-block: 0.08em;
-        margin-block: -0.08em;
+    .hero-escrito .letra {
+        transition:
+            opacity 220ms var(--ease-salida),
+            filter 220ms var(--ease-salida);
+    }
+
+    .hero-tardio {
+        transition:
+            opacity var(--duracion-media) var(--ease-salida),
+            translate var(--duracion-media) var(--ease-salida);
+    }
+
+    /* Una barra fina del alto de la letra que se desliza de letra en letra. */
+    .hero-cursor {
+        display: none;
+        position: absolute;
+        top: 0.06em;
+        left: 0;
+        width: 0.055em;
+        height: 0.9em;
+        background-color: var(--color-texto);
+        transition:
+            translate 100ms var(--ease-salida),
+            opacity 250ms var(--ease-salida);
+    }
+
+    /* Parpadeo suave: se funde al apagarse y al encenderse. */
+    .hero-cursor.parpadea {
+        animation: parpadeo-de-cursor 1100ms ease-in-out infinite;
+    }
+
+    .hero-cursor.apagado {
+        animation: none;
+        opacity: 0;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .js .hero-cursor {
+            display: block;
+        }
+
+        .js .hero-escrito:not([data-fase="hecho"]) .letra:not(.tecleada) {
+            opacity: 0;
+            filter: blur(0.06em);
+        }
+
+        .js .hero-escrito:not([data-fase="hecho"]) .hero-tardio {
+            opacity: 0;
+            translate: 0 0.5rem;
+        }
+
+        /* Red de seguridad: si el JavaScript no llega a arrancar, todo aparece a los 5 s. */
+        .js .hero-escrito[data-fase="esperando"] :is(.letra, .hero-tardio) {
+            animation: hero-sin-escribir 0s 5s forwards;
+        }
+
+        .js .hero-escrito[data-fase="esperando"] .hero-cursor {
+            animation:
+                parpadeo-de-cursor 1100ms ease-in-out infinite,
+                hero-sin-cursor 0s 5s forwards;
+        }
+    }
+
+    @keyframes parpadeo-de-cursor {
+        0%,
+        20% {
+            opacity: 1;
+        }
+
+        60%,
+        80% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes hero-sin-escribir {
+        to {
+            opacity: 1;
+            filter: none;
+            translate: none;
+        }
+    }
+
+    @keyframes hero-sin-cursor {
+        to {
+            opacity: 0;
+        }
     }
 
     /*

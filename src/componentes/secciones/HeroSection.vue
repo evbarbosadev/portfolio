@@ -1,95 +1,235 @@
 <script setup lang="ts">
-import { computed, useTemplateRef } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from "vue";
 import BotonEnlace from "@/componentes/base/BotonEnlace.vue";
 import ContenedorPagina from "@/componentes/base/ContenedorPagina.vue";
-import ImagenOptimizada from "@/componentes/base/ImagenOptimizada.vue";
-import ImagenPendiente from "@/componentes/base/ImagenPendiente.vue";
 import { useIdioma } from "@/composables/useIdioma";
 import { useTextos } from "@/composables/useTextos";
-import { ANCLA_CONTACTO, ANCLA_PROYECTOS } from "@/constantes";
-import { getProyectosDestacados } from "@/contenido/consultas";
+import { ANCLA_CONTACTO, ANCLA_PROYECTOS, CONSULTA_MOVIMIENTO_REDUCIDO } from "@/constantes";
 import { sitio } from "@/contenido/sitio";
-import { marcarPortadaParaTransicion } from "@/movimiento/transicionesDePagina";
-import { getRutaProyecto } from "@/rutas";
+
+/*
+    Un cursor de editor escribe el lema letra a letra; al acabar salen el nombre y los botones.
+    Las letras ya vienen en el HTML: sin JavaScript o con movimiento reducido se ven tal cual, y
+    con JavaScript el CSS las esconde desde el primer pintado (ver «HERO ESCRITO» en base.css).
+*/
+
+// Ritmo de la escritura, en milisegundos.
+const ESPERA_INICIAL = 900; // solo el cursor, parpadeando
+const PULSACION = 38; // media entre teclas
+const VARIACION = 26; // irregularidad, para que parezca una persona
+const ENTRE_PALABRAS = 22;
+const PAUSA = 320; // entre los dos trozos del lema
+const RESPIRO_FINAL = 220; // de la última letra al nombre
+const PARPADEO = 1100;
+// Pasado este momento desde que se abre la página ya no se escribe: se enseña entero.
+const LIMITE_PARA_ESCRIBIR = 3500;
+
+type Fase = "esperando" | "escribiendo" | "hecho";
 
 const { t } = useTextos();
 const { idioma } = useIdioma();
-const portada = useTemplateRef<HTMLElement>("portada");
+const titular = useTemplateRef<HTMLElement>("titular");
+const cursor = useTemplateRef<HTMLElement>("cursor");
 
 const nombre = sitio.nombreEnLineas.join(" ");
-// La imagen del hero es la portada del primer proyecto destacado.
-const proyectoDestacado = computed(() => getProyectosDestacados(idioma.value)[0]);
+const lema = computed(() => sitio.lema[idioma.value].join(" "));
 
-// Cada línea del nombre entra un poco después de la anterior.
-const RETRASOS = ["", "retraso-breve", "retraso-media"];
+const fase = ref<Fase>("esperando");
+const letrasEscritas = ref(0);
+const cursorApagado = ref(false);
+
+let idDeFotograma = 0;
+let temporizador: ReturnType<typeof setTimeout> | undefined;
+
+/**
+ * Parte el lema en palabras (que no se cortan al final de línea) y letras. Cada palabra guarda
+ * el número de su primera letra y si va justo después de la pausa.
+ */
+const palabras = computed(() => {
+    let inicio = 0;
+
+    return sitio.lema[idioma.value].flatMap((trozo, numeroDeTrozo) =>
+        trozo.split(" ").map((texto, posicion) => {
+            const palabra = {
+                letras: [...texto],
+                inicio,
+                trasLaPausa: numeroDeTrozo > 0 && posicion === 0,
+            };
+            inicio += palabra.letras.length;
+            return palabra;
+        }),
+    );
+});
+
+/**
+ * Calcula en qué momento (desde que empieza) aparece cada letra.
+ */
+function calcularHorario(): number[] {
+    const horario: number[] = [];
+    let momento = ESPERA_INICIAL;
+
+    palabras.value.forEach((palabra, numero) => {
+        if (numero > 0) {
+            momento += palabra.trasLaPausa ? PAUSA : ENTRE_PALABRAS;
+        }
+
+        for (let i = 0; i < palabra.letras.length; i++) {
+            horario.push(momento);
+            momento += PULSACION + (Math.random() - 0.5) * VARIACION;
+        }
+    });
+
+    return horario;
+}
+
+/**
+ * Lleva el cursor detrás de la última letra escrita. Al cambiar de línea salta sin deslizarse.
+ */
+function moverCursor() {
+    const letras = titular.value?.querySelectorAll(".letra");
+    const ultima = letras?.[letrasEscritas.value - 1];
+
+    if (!titular.value || !cursor.value || !ultima) {
+        return;
+    }
+
+    const caja = titular.value.getBoundingClientRect();
+    const letra = ultima.getBoundingClientRect();
+    const y = letra.top - caja.top;
+    const cambiaDeLinea = Math.abs(Number(cursor.value.dataset.y ?? y) - y) > 2;
+
+    cursor.value.style.transitionProperty = cambiaDeLinea ? "opacity" : "";
+    cursor.value.style.translate = `${letra.right - caja.left}px ${y}px`;
+    cursor.value.dataset.y = String(y);
+}
+
+/**
+ * Escribe el lema. Va por tiempo transcurrido y no por temporizadores, para que una pestaña en
+ * segundo plano (que frena los temporizadores) no la deje a medias: al volver, ya está escrito.
+ */
+function escribir() {
+    const horario = calcularHorario();
+    const comienzo = performance.now();
+
+    const avanzar = (ahora: number) => {
+        const transcurrido = ahora - comienzo;
+        const escritas = horario.filter((momento) => momento <= transcurrido).length;
+
+        if (escritas > 0) {
+            fase.value = "escribiendo";
+        }
+
+        if (escritas !== letrasEscritas.value) {
+            letrasEscritas.value = escritas;
+            nextTick(moverCursor);
+        }
+
+        if (escritas === horario.length) {
+            temporizador = setTimeout(terminar, RESPIRO_FINAL);
+            return;
+        }
+
+        idDeFotograma = requestAnimationFrame(avanzar);
+    };
+
+    idDeFotograma = requestAnimationFrame(avanzar);
+}
+
+/**
+ * Deja el hero completo: el lema entero, el nombre y los botones. El cursor parpadea una vez y se apaga.
+ */
+function terminar() {
+    if (fase.value === "hecho") {
+        return;
+    }
+
+    cancelAnimationFrame(idDeFotograma);
+    clearTimeout(temporizador);
+    fase.value = "hecho";
+    temporizador = setTimeout(() => (cursorApagado.value = true), PARPADEO * 1.2 - RESPIRO_FINAL);
+}
+
+onMounted(() => {
+    // Sin animación si se pide movimiento reducido, si la página se abre en segundo plano o si el
+    // JavaScript llega tan tarde que la red de seguridad del CSS (a los 5 s) ya lo habría enseñado.
+    if (
+        matchMedia(CONSULTA_MOVIMIENTO_REDUCIDO).matches ||
+        document.hidden ||
+        performance.now() > LIMITE_PARA_ESCRIBIR
+    ) {
+        terminar();
+        cursorApagado.value = true;
+        return;
+    }
+
+    escribir();
+});
+
+// Al cambiar de idioma no se vuelve a escribir: el lema nuevo sale entero.
+watch(idioma, terminar);
+
+onBeforeUnmount(() => {
+    cancelAnimationFrame(idDeFotograma);
+    clearTimeout(temporizador);
+});
 </script>
 
 <template>
     <!--
-        Texto a la izquierda (7 columnas), alineado abajo con la portada de la derecha (5).
-        En móvil va todo seguido: titular, frase, botones e imagen. La entrada es CSS puro
-        (ranura, aparecer y recorte): arranca con el primer pintado, sin esperar al JavaScript.
+        El lema abajo, a lo ancho; encima, el nombre con el puesto, y debajo los botones.
+        Si alguien llega con el teclado a un botón antes de que acabe, se salta al final.
     -->
-    <section aria-labelledby="titulo-hero">
+    <section
+        aria-labelledby="titulo-hero"
+        class="hero-escrito"
+        :data-fase="fase"
+        @focusin="terminar"
+    >
         <ContenedorPagina
-            class="grid gap-5 pt-hero pb-seccion tablet:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] tablet:items-end tablet:gap-8"
+            class="flex min-h-[calc(100svh-var(--spacing-cabecera))] flex-col justify-end pt-hero pb-seccion"
         >
-            <div>
-                <!-- El nombre va partido en líneas con máscara; aria-label da el nombre completo de una vez. -->
-                <h1 id="titulo-hero" class="text-titular wrap-anywhere" :aria-label="nombre">
-                    <span
-                        v-for="(linea, numero) in sitio.nombreEnLineas"
-                        :key="linea"
-                        class="linea-mascara"
-                        aria-hidden="true"
-                    >
-                        <span class="block animate-ranura" :class="RETRASOS[numero]">{{
-                            linea
-                        }}</span>
+            <h1 id="titulo-hero">
+                <span class="hero-tardio mb-3 block text-entradilla">
+                    {{ nombre }}
+                    <span class="text-texto-suave">· {{ sitio.puesto[idioma] }}</span>
+                </span>
+
+                <span ref="titular" class="relative block max-w-[14.5em] text-titular">
+                    <span class="sr-only">{{ lema }}</span>
+                    <span aria-hidden="true">
+                        <template v-for="(palabra, numero) in palabras" :key="numero">
+                            {{ numero > 0 ? " " : ""
+                            }}<span class="whitespace-nowrap"
+                                ><span
+                                    v-for="(letra, posicion) in palabra.letras"
+                                    :key="posicion"
+                                    class="letra"
+                                    :class="{
+                                        tecleada: palabra.inicio + posicion < letrasEscritas,
+                                    }"
+                                    >{{ letra }}</span
+                                ></span
+                            >
+                        </template>
                     </span>
-                </h1>
-
-                <p
-                    class="mt-3 mb-5 max-w-lectura animate-aparecer text-entradilla text-texto-suave retraso-larga"
-                >
-                    {{ sitio.frase[idioma] }}
-                </p>
-
-                <div class="flex animate-aparecer flex-wrap gap-1.5 retraso-larga">
-                    <BotonEnlace :ancla="ANCLA_PROYECTOS">{{ t("hero.verProyectos") }}</BotonEnlace>
-                    <BotonEnlace :ancla="ANCLA_CONTACTO" variante="secundario">
-                        {{ t("hero.contacto") }}
-                    </BotonEnlace>
-                </div>
-            </div>
-
-            <!-- Es la imagen más grande del primer pantallazo: se carga con prioridad. -->
-            <RouterLink
-                v-if="proyectoDestacado"
-                :to="getRutaProyecto(proyectoDestacado)"
-                class="block"
-                @click="marcarPortadaParaTransicion(portada)"
-            >
-                <span
-                    ref="portada"
-                    class="block aspect-4/5 animate-recorte overflow-hidden rounded-grande"
-                    :class="
-                        proyectoDestacado.portadaClara ? 'bg-superficie' : 'bg-superficie-fuerte'
-                    "
-                >
-                    <ImagenOptimizada
-                        v-if="proyectoDestacado.portada"
-                        :imagen="proyectoDestacado.portada.imagen"
-                        :alt="`${proyectoDestacado.titulo}. ${proyectoDestacado.portada.alt}`"
-                        anchos="(min-width: 80rem) 30rem, (min-width: 40rem) 40vw, 92vw"
-                        es-prioritaria
-                    />
-                    <ImagenPendiente
-                        v-else
-                        :texto="`${t('comun.portadaPendiente')} · ${proyectoDestacado.titulo}`"
+                    <span
+                        ref="cursor"
+                        class="hero-cursor"
+                        :class="{
+                            parpadea: fase !== 'escribiendo',
+                            apagado: cursorApagado,
+                        }"
+                        aria-hidden="true"
                     />
                 </span>
-            </RouterLink>
+            </h1>
+
+            <div class="hero-tardio mt-5 flex flex-wrap gap-1.5 delay-[120ms]">
+                <BotonEnlace :ancla="ANCLA_PROYECTOS">{{ t("hero.verProyectos") }}</BotonEnlace>
+                <BotonEnlace :ancla="ANCLA_CONTACTO" variante="secundario">
+                    {{ t("hero.contacto") }}
+                </BotonEnlace>
+            </div>
         </ContenedorPagina>
     </section>
 </template>

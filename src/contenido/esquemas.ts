@@ -90,7 +90,8 @@ export const esquemaExperiencia = z.strictObject({
 export const esquemaSitio = z.strictObject({
     nombreEnLineas: z.array(texto).min(1),
     rol: porIdioma(),
-    frase: porIdioma(),
+    puesto: porIdioma(),
+    lema: z.strictObject({ es: z.tuple([texto, texto]), en: z.tuple([texto, texto]) }),
     sobreMi: porIdioma(),
     // Ficha de «Sobre mí»: el stack en dos líneas (la principal y la secundaria) y lo que hay además.
     stack: z.tuple([texto, texto]),

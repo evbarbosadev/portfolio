@@ -20,7 +20,7 @@ const urlInicio = getUrlAbsoluta("/");
 
 useCabecera(() => ({
     titulo: t("seo.tituloInicio"),
-    descripcion: sitio.frase[idioma.value],
+    descripcion: `${sitio.puesto[idioma.value]}. ${sitio.lema[idioma.value].join(" ")}`,
     rutas: { es: getRutaInicio("es"), en: getRutaInicio("en") },
     claveImagenOg: "inicio",
     // Datos estructurados: quién es la persona y cuál es el sitio, para buscadores.

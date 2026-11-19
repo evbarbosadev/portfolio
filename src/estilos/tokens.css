@@ -83,13 +83,10 @@
 
     --font-weight-normal: 400;
 
-    /*
-        Titular: el nombre del hero y el título de cada página. 72 px en escritorio; en móvil baja
-        hasta 48 px para que el nombre quepa sin partirse.
-    */
-    --text-titular: clamp(3rem, 10vw, 4.5rem);
-    --text-titular--line-height: 1.02;
-    --text-titular--letter-spacing: -0.03em;
+    /* Titular: el lema del hero. De 40 px en móvil a 124 px en pantallas grandes. */
+    --text-titular: clamp(2.5rem, 7.4vw, 7.75rem);
+    --text-titular--line-height: 1;
+    --text-titular--letter-spacing: -0.035em;
 
     /* Email de contacto: de 32 px a 56 px. Es lo más grande de su sección. */
     --text-correo: clamp(2rem, 6vw, 3.5rem);
@@ -182,19 +179,11 @@
     /*
         MOVIMIENTO: ANIMACIONES DE ENTRADA
         Son CSS puro para que arranquen con el primer pintado, sin esperar al JavaScript.
-        ranura: una línea de titular sube desde detrás de su máscara (cinematográfico).
         aparecer: fundido con 8 px de desplazamiento (todo lo demás).
         recorte: una imagen de proyecto se descubre de abajo arriba (cinematográfico).
     */
-    --animate-ranura: ranura var(--duracion-larga) var(--ease-cine) both;
     --animate-aparecer: aparecer var(--duracion-media) var(--ease-salida) both;
     --animate-recorte: recorte var(--duracion-larga) var(--ease-cine) both;
-
-    @keyframes ranura {
-        from {
-            transform: translateY(105%);
-        }
-    }
 
     @keyframes aparecer {
         from {
@@ -225,7 +214,6 @@
 */
 @media (prefers-reduced-motion: reduce) {
     :root {
-        --animate-ranura: none;
         --animate-aparecer: none;
         --animate-recorte: none;
     }

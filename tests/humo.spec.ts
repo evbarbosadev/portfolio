@@ -358,6 +358,21 @@ test.describe("movimiento reducido", () => {
         expect(peticiones.filter((url) => url.includes("coreografia"))).toEqual([]);
         await expect(page.locator("html")).not.toHaveAttribute("data-movimiento");
         await expect(page.locator("#contacto h2")).toBeVisible();
+
+        // El hero no se escribe: el lema, el nombre y los botones están desde el principio.
+        await expect(page.locator(".hero-escrito .letra").last()).toHaveCSS("opacity", "1");
+        await expect(page.locator(".hero-escrito .hero-tardio").last()).toHaveCSS("opacity", "1");
+    });
+
+    test("sin movimiento reducido, el hero acaba entero", async ({ page }) => {
+        await page.goto("/");
+
+        // Lo escribe en unos 3 s; el margen cubre una máquina lenta.
+        await expect(page.locator(".hero-escrito")).toHaveAttribute("data-fase", "hecho", {
+            timeout: 8000,
+        });
+        await expect(page.locator(".hero-escrito .letra").last()).toHaveCSS("opacity", "1");
+        await expect(page.locator(".hero-escrito .hero-tardio").last()).toHaveCSS("opacity", "1");
     });
 });
 
@@ -368,6 +383,7 @@ test.describe("sin JavaScript", () => {
         await page.goto("/");
 
         await expect(page.locator("h1")).toBeVisible();
+        await expect(page.locator(".hero-escrito .letra").first()).toHaveCSS("opacity", "1");
         await expect(page.locator("#contacto h2")).toBeVisible();
         // El interruptor de tema necesita JavaScript, así que no se muestra.
         await expect(page.getByRole("button", { name: "Tema oscuro" })).toBeHidden();

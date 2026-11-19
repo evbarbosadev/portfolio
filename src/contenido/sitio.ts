@@ -1,20 +1,26 @@
 import type { DatosDelSitio } from "./esquemas";
 
 /**
- * Datos del sitio. Único fichero con el nombre, el rol, la frase y los enlaces de contacto.
+ * Datos del sitio. Único fichero con el nombre, el rol, el lema y los enlaces de contacto.
  * La URL pública no va aquí: se lee de la variable VITE_URL_SITIO (ver .env).
  */
 export const sitio: DatosDelSitio = {
-    // Cada elemento es una línea del nombre en el hero; juntos forman el nombre completo.
+    // Nombre y apellido; juntos forman el nombre completo.
     nombreEnLineas: ["Vinícius", "Barbosa"],
-    // El rol va en los datos estructurados y en la imagen OG; en la web lo dice la frase del hero.
+    // El rol va en los datos estructurados y en la imagen OG; en la web lo dice el puesto del hero.
     rol: {
         es: "Desarrollador full stack",
         en: "Full-stack developer",
     },
-    frase: {
-        es: "Desarrollador full stack en Ayesa Digital. Me gusta que las cosas funcionen bien y se vean bien.",
-        en: "Full-stack developer at Ayesa Digital. I like things to work well and look good.",
+    // El puesto va pequeño junto al nombre, encima del lema.
+    puesto: {
+        es: "Desarrollador full stack en Ayesa Digital",
+        en: "Full-stack developer at Ayesa Digital",
+    },
+    // El lema es el titular del hero. Se escribe en dos golpes, con una pausa entre ellos.
+    lema: {
+        es: ["Me gusta que las cosas funcionen bien", "y se vean bien."],
+        en: ["I like things to work well", "and look good."],
     },
     // Bloque de texto corto de la sección «Sobre mí». Un salto de línea separa párrafos.
     sobreMi: {
