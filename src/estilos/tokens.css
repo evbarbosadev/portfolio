@@ -88,6 +88,12 @@
     --text-titular--line-height: 1;
     --text-titular--letter-spacing: -0.035em;
 
+    /* Lema del hero: algo menor que el titular, para que «Software que funciona bien.» quepa en
+       una línea dentro de los 1280 px del contenido. */
+    --text-lema: clamp(2.5rem, 7.2vw, 5.75rem);
+    --text-lema--line-height: 1;
+    --text-lema--letter-spacing: -0.035em;
+
     /* Email de contacto: de 32 px a 56 px. Es lo más grande de su sección. */
     --text-correo: clamp(2rem, 6vw, 3.5rem);
     --text-correo--line-height: 1.1;

@@ -37,6 +37,7 @@ const lema = computed(() => sitio.lema[idioma.value].join(" "));
 const fase = ref<Fase>("esperando");
 const letrasEscritas = ref(0);
 const cursorApagado = ref(false);
+const cursorOculto = ref(false);
 
 let idDeFotograma = 0;
 let temporizador: ReturnType<typeof setTimeout> | undefined;
@@ -49,11 +50,13 @@ const palabras = computed(() => {
     let inicio = 0;
 
     return sitio.lema[idioma.value].flatMap((trozo, numeroDeTrozo) =>
-        trozo.split(" ").map((texto, posicion) => {
+        trozo.split(" ").map((texto, posicion, textos) => {
             const palabra = {
                 letras: [...texto],
                 inicio,
                 trasLaPausa: numeroDeTrozo > 0 && posicion === 0,
+                // La última palabra de cada trozo no se queda sola en una línea.
+                pegadaALaAnterior: posicion > 0 && posicion === textos.length - 1,
             };
             inicio += palabra.letras.length;
             return palabra;
@@ -136,7 +139,8 @@ function escribir() {
 }
 
 /**
- * Deja el hero completo: el lema entero, el nombre y los botones. El cursor parpadea una vez y se apaga.
+ * Deja el hero completo: el lema entero, el nombre y los botones. El cursor parpadea una vez y se
+ * apaga con un último parpadeo, al mismo ritmo que los anteriores.
  */
 function terminar() {
     if (fase.value === "hecho") {
@@ -146,7 +150,8 @@ function terminar() {
     cancelAnimationFrame(idDeFotograma);
     clearTimeout(temporizador);
     fase.value = "hecho";
-    temporizador = setTimeout(() => (cursorApagado.value = true), PARPADEO * 1.2 - RESPIRO_FINAL);
+    // Justo cuando acaba el primer parpadeo, para que el último empiece encendido como los demás.
+    temporizador = setTimeout(() => (cursorApagado.value = true), PARPADEO);
 }
 
 onMounted(() => {
@@ -158,7 +163,7 @@ onMounted(() => {
         performance.now() > LIMITE_PARA_ESCRIBIR
     ) {
         terminar();
-        cursorApagado.value = true;
+        cursorOculto.value = true;
         return;
     }
 
@@ -194,11 +199,17 @@ onBeforeUnmount(() => {
                     <span class="text-texto-suave">· {{ sitio.puesto[idioma] }}</span>
                 </span>
 
-                <span ref="titular" class="relative block max-w-[14.5em] text-titular">
+                <span ref="titular" class="relative block max-w-[14.5em] text-lema">
                     <span class="sr-only">{{ lema }}</span>
                     <span aria-hidden="true">
                         <template v-for="(palabra, numero) in palabras" :key="numero">
-                            {{ numero > 0 ? " " : ""
+                            <!-- Tras la pausa, el segundo trozo empieza en su propia línea. -->
+                            <br v-if="palabra.trasLaPausa" />{{
+                                numero === 0 || palabra.trasLaPausa
+                                    ? ""
+                                    : palabra.pegadaALaAnterior
+                                      ? "\u00a0"
+                                      : " "
                             }}<span class="whitespace-nowrap"
                                 ><span
                                     v-for="(letra, posicion) in palabra.letras"
@@ -218,6 +229,7 @@ onBeforeUnmount(() => {
                         :class="{
                             parpadea: fase !== 'escribiendo',
                             apagado: cursorApagado,
+                            oculto: cursorOculto,
                         }"
                         aria-hidden="true"
                     />

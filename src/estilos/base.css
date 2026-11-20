@@ -152,8 +152,10 @@ html:not(.js) .solo-js {
     .hero-cursor {
         display: none;
         position: absolute;
-        top: 0.06em;
-        left: 0;
+        /* Va de un pelo por encima de las mayúsculas a un pelo por debajo de la línea base. */
+        top: 0.2em;
+        /* Un respiro tras la última letra, para que no se pegue a un punto o a una «l». */
+        left: 0.06em;
         width: 0.055em;
         height: 0.9em;
         background-color: var(--color-texto);
@@ -167,9 +169,14 @@ html:not(.js) .solo-js {
         animation: parpadeo-de-cursor 1100ms ease-in-out infinite;
     }
 
+    /* Se apaga con un último parpadeo igual que los demás, y ya no vuelve. */
     .hero-cursor.apagado {
-        animation: none;
-        opacity: 0;
+        animation: apagado-de-cursor 1100ms ease-in-out forwards;
+    }
+
+    /* Si no hay escritura (llega tarde, en segundo plano...), el cursor ni aparece. */
+    .hero-cursor.oculto {
+        display: none;
     }
 
     @media (prefers-reduced-motion: no-preference) {
@@ -207,6 +214,18 @@ html:not(.js) .solo-js {
 
         60%,
         80% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes apagado-de-cursor {
+        0%,
+        20% {
+            opacity: 1;
+        }
+
+        60%,
+        100% {
             opacity: 0;
         }
     }
