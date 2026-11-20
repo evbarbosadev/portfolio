@@ -29,6 +29,11 @@ function volverArriba(evento: MouseEvent) {
         >
             <p>© {{ año }} {{ nombre }}</p>
             <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <!-- Firma de la marca: solo el símbolo plano, sin texto al lado (regla ID-7 de la guía de Vørlys). -->
+                <p class="flex items-center">
+                    <SimboloVorlys class="size-2 text-texto" />
+                    <span class="sr-only">{{ t("pie.firma") }}</span>
+                </p>
                 <a
                     :href="`#${ANCLA_CONTENIDO}`"
                     class="transition-colors duracion-breve ease-salida hover:text-texto"
@@ -36,11 +41,6 @@ function volverArriba(evento: MouseEvent) {
                 >
                     {{ t("pie.arriba") }}
                 </a>
-                <!-- Firma de la marca: Vørlys va detrás, solo aquí y como uno de los proyectos. -->
-                <p class="flex items-center gap-1">
-                    <SimboloVorlys class="size-2 text-texto" />
-                    <span class="font-mono text-etiqueta uppercase">{{ t("pie.firma") }}</span>
-                </p>
             </div>
         </div>
     </footer>

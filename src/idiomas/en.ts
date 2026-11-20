@@ -85,7 +85,7 @@ const diccionario: DiccionarioParcial = {
     },
     pie: {
         arriba: "Back to top",
-        firma: "Made with Vørlys",
+        firma: "Vørlys",
     },
     seo: {
         tituloInicio: "Portfolio",

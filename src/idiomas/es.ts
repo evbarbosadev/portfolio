@@ -87,7 +87,7 @@ export default {
     },
     pie: {
         arriba: "Volver arriba",
-        firma: "Hecho con Vørlys",
+        firma: "Vørlys",
     },
     seo: {
         tituloInicio: "Portfolio",
