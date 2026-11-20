@@ -28,7 +28,7 @@ function volverArriba(evento: MouseEvent) {
             class="mx-auto flex max-w-pagina flex-wrap items-center justify-between gap-x-4 gap-y-2 px-margen pt-4 pb-6 text-detalle text-texto-suave"
         >
             <p>© {{ año }} {{ nombre }}</p>
-            <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <div class="flex flex-wrap items-center gap-x-1.5 gap-y-2">
                 <!-- Firma de la marca: solo el símbolo plano, sin texto al lado (regla ID-7 de la guía de Vørlys). -->
                 <p class="flex items-center">
                     <SimboloVorlys class="size-2 text-texto" />

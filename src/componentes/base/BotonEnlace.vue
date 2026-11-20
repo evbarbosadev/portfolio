@@ -3,7 +3,7 @@ import { useEnlaceASeccion } from "@/composables/useEnlaceASeccion";
 
 /**
  * Enlace con aspecto de botón, para las llamadas a la acción. La variante primaria va rellena
- * y la secundaria solo con borde. Lleva a otra página (href) o a una sección de la principal (ancla).
+ * y la secundaria por tono, con un gris de fondo y sin borde. Lleva a otra página (href) o a una sección de la principal (ancla).
  */
 const props = withDefaults(
     defineProps<{
@@ -16,10 +16,10 @@ const props = withDefaults(
 
 const { getHrefDeSeccion, irASeccion } = useEnlaceASeccion();
 
-// Al pasar el ratón solo cambia la opacidad: nada crece ni se mueve.
+// Al pasar el ratón y al pulsar solo cambia la opacidad: nada crece ni se mueve.
 const clases = [
-    "inline-flex h-6 items-center gap-1 rounded-medio border px-2.5 text-detalle transition-opacity duracion-breve ease-salida hover:opacity-80",
-    props.variante === "primario" ? "border-texto bg-texto text-fondo" : "border-linea text-texto",
+    "inline-flex h-6 items-center gap-1 rounded-medio px-2.5 text-detalle transition-opacity duracion-breve ease-salida hover:opacity-80 active:opacity-60",
+    props.variante === "primario" ? "bg-texto text-fondo" : "bg-tono text-texto",
 ];
 </script>
 

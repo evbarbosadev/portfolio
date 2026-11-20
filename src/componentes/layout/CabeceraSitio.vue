@@ -33,7 +33,8 @@ function irDesdeMenu(evento: MouseEvent, ancla: string) {
 </script>
 
 <template>
-    <header class="sticky top-0 z-40 bg-fondo">
+    <!-- Sin fondo propio: la niebla es la copia de la luz que lleva dentro. -->
+    <header class="sticky top-0 z-40">
         <LuzDeFondo solo-cabecera />
         <div
             class="mx-auto flex h-cabecera max-w-pagina items-center justify-between gap-3 px-margen text-detalle text-texto-suave"

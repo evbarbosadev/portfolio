@@ -60,6 +60,12 @@
         scroll-padding-top: var(--spacing-cabecera);
     }
 
+    /* Al tocar en el móvil, Chrome pinta un halo azul encima: el pulsado ya lo da la opacidad. */
+    a,
+    button {
+        -webkit-tap-highlight-color: transparent;
+    }
+
     body {
         min-height: 100dvh;
         font-size: var(--text-cuerpo);
@@ -323,19 +329,70 @@ html:not(.js) .solo-js {
         Tres luces redondas quietas detrás de todo, cada una flotando muy despacio por su cuenta
         (de 28 a 44 s, ida y vuelta, con ritmos distintos para que nunca se repita igual). No
         dependen del scroll ni del cursor. En el tema claro son sombra en vez de luz, a la mitad.
-        La cabecera es opaca y lleva su propia copia recortada a su altura (LuzDeFondo.vue con
-        «soloCabecera»); las dos empiezan a la vez, así que van sincronizadas.
+        La cabecera lleva otra copia encima del contenido que hace de niebla (LuzDeFondo.vue con
+        «soloCabecera»). Lleva el color de fondo, así que enmascarada con un degradado tapa el
+        contenido y deja ver la luz sin cortes. Las dos empiezan a la vez: van sincronizadas.
     */
     .luz-de-fondo {
         position: fixed;
-        inset: 0;
+        /* Alto de pantalla con la barra del navegador escondida: al esconderse al bajar, la capa ya cubre lo que destapa. */
+        inset: 0 0 auto;
+        height: 100lvh;
         z-index: -1;
         overflow: hidden;
         pointer-events: none;
     }
 
+    /*
+        La niebla de la cabecera: opaca hasta justo debajo del menú (52 px) y se pierde en 24 px,
+        12 px por debajo de la cabecera, sin línea ni franja lisa (COMP-12 de Vørlys). Corta a
+        propósito: sobre una portada oscura, una niebla larga se ve como una banda. La copia mide
+        solo eso, para no recomponer otra capa de pantalla entera en cada fotograma. Hasta esa
+        altura solo llega la primera luz: las otras dos sobran (y aquí quedarían mal puestas).
+    */
     .luz-de-fondo--cabecera {
-        clip-path: inset(0 0 calc(100% - var(--spacing-cabecera)) 0);
+        --alto-de-niebla: calc(var(--spacing-cabecera) + 0.75rem);
+        --fundido-de-niebla: 1.5rem;
+        --inicio-de-fundido: calc(var(--alto-de-niebla) - var(--fundido-de-niebla));
+        bottom: auto;
+        height: var(--alto-de-niebla);
+        mask-image: linear-gradient(
+            to bottom,
+            black 0,
+            rgb(0 0 0 / 0.99) var(--inicio-de-fundido),
+            rgb(0 0 0 / 0.96) calc(var(--inicio-de-fundido) + var(--fundido-de-niebla) * 0.257),
+            rgb(0 0 0 / 0.78) calc(var(--inicio-de-fundido) + var(--fundido-de-niebla) * 0.429),
+            rgb(0 0 0 / 0.48) calc(var(--inicio-de-fundido) + var(--fundido-de-niebla) * 0.6),
+            rgb(0 0 0 / 0.2) calc(var(--inicio-de-fundido) + var(--fundido-de-niebla) * 0.771),
+            rgb(0 0 0 / 0.06) calc(var(--inicio-de-fundido) + var(--fundido-de-niebla) * 0.9),
+            transparent var(--alto-de-niebla)
+        );
+    }
+
+    .luz-de-fondo--cabecera span:not(:first-child) {
+        display: none;
+    }
+
+    /*
+        La misma niebla, mucho más fina (16 px), en el borde de abajo. Es una franja pegada abajo
+        y no una copia de la luz: así sigue al borde real de la pantalla en el móvil, y la luz que
+        tapa es tan tenue que no se nota. Al llegar al final cae sobre el margen vacío del pie.
+    */
+    .niebla-de-abajo {
+        position: fixed;
+        inset: auto 0 0;
+        z-index: 30;
+        height: 1rem;
+        pointer-events: none;
+        background: linear-gradient(
+            to top,
+            var(--color-fondo),
+            color-mix(in srgb, var(--color-fondo) 78%, transparent) 30%,
+            color-mix(in srgb, var(--color-fondo) 48%, transparent) 50%,
+            color-mix(in srgb, var(--color-fondo) 20%, transparent) 70%,
+            color-mix(in srgb, var(--color-fondo) 6%, transparent) 85%,
+            transparent
+        );
     }
 
     /*

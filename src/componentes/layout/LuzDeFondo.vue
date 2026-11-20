@@ -1,10 +1,10 @@
 <script setup lang="ts">
 /*
     Las luces del fondo (ver «LUZ DE FONDO» en base.css). Va una vez detrás de toda la página y
-    otra dentro de la cabecera, que es opaca, recortada a su altura para que la luz no se corte.
+    otra dentro de la cabecera, enmascarada, que hace de niebla.
 */
 defineProps<{
-    // Dentro de la cabecera: solo se ve la franja que ocupa ella.
+    // Dentro de la cabecera: solo se ve la franja de la niebla.
     soloCabecera?: boolean;
 }>();
 </script>

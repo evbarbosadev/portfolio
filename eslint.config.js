@@ -11,6 +11,8 @@ export default tseslint.config(
             "test-results",
             ".lighthouseci",
             "vorlys-sans",
+            // El kit de marca es otro repo (vorlys/marca), con sus propias reglas.
+            "marca",
         ],
     },
     js.configs.recommended,

@@ -87,7 +87,7 @@ useCabecera(() => {
 
             <!-- Es la imagen principal del primer pantallazo: se carga con prioridad, no en diferido. -->
             <div
-                class="portada-de-caso mt-8 aspect-16/10 overflow-hidden rounded-grande"
+                class="portada-de-caso mt-8 aspect-video overflow-hidden rounded-grande"
                 :class="proyecto.portadaClara ? 'bg-superficie' : 'bg-superficie-fuerte'"
             >
                 <ImagenOptimizada

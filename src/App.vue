@@ -97,4 +97,5 @@ function setListeners() {
         </RouterView>
     </main>
     <PieSitio />
+    <div class="niebla-de-abajo" aria-hidden="true" />
 </template>

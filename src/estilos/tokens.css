@@ -63,8 +63,11 @@
     /* Texto secundario: entradillas, fechas, etiquetas. Contraste de 5:1 o más en los dos temas. */
     --color-texto-suave: light-dark(var(--color-gris-600), var(--color-gris-500));
 
-    /* Borde de 1 px. Solo en botones secundarios y campos; nunca alrededor de fichas. */
+    /* Borde de 1 px. Solo en campos y tablas de cifras; nunca en botones ni alrededor de fichas. */
     --color-linea: light-dark(var(--color-gris-200), var(--color-gris-800));
+
+    /* Fondo del botón secundario, que se distingue por tono y no por borde. */
+    --color-tono: light-dark(var(--color-gris-100), var(--color-gris-850));
 
     /* Superficie leve, solo cuando una imagen clara se perdería sobre el fondo. */
     --color-superficie: light-dark(var(--color-gris-50), var(--color-gris-900));
@@ -139,8 +142,8 @@
     --spacing: 0.5rem;
     /* Margen lateral: 20 px en móvil (390) y 64 px en escritorio (1440). */
     --spacing-margen: clamp(1.25rem, 0.229rem + 4.19vw, 4rem);
-    /* Alto de la cabecera fija: 88 px. Las secciones dejan ese hueco al saltar a ellas. */
-    --spacing-cabecera: 5.5rem;
+    /* Alto de la cabecera fija: 64 px. Las secciones dejan ese hueco al saltar a ellas. */
+    --spacing-cabecera: 4rem;
     /* Aire entre secciones: de 48 px a 96 px. */
     --spacing-seccion: clamp(3rem, 1.636rem + 6.818vw, 6rem);
     /* Aire sobre el hero: de 64 px a 128 px. */
