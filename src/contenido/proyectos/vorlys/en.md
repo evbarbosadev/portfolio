@@ -12,6 +12,9 @@ stack:
     - "SVG"
     - "Tailwind CSS"
     - "Antigravity"
+portada:
+    src: "./portada.png"
+    alt: "The Vørlys symbol on light grey, with “Vørlys Sans · Geist Mono · 400” below."
 portadaClara: true
 destacado: true
 orden: 2

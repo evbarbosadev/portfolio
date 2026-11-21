@@ -14,6 +14,9 @@ stack:
     - "GSAP"
 enlaces:
     repo: "https://github.com/evbarbosadev/portfolio"
+portada:
+    src: "./portada-en.png"
+    alt: "This site's motto, white on dark grey: “Software that works well. And looks good.”"
 destacado: true
 orden: 3
 borrador: false

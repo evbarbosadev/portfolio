@@ -14,6 +14,9 @@ stack:
     - "GSAP"
 enlaces:
     repo: "https://github.com/evbarbosadev/portfolio"
+portada:
+    src: "./portada.png"
+    alt: "El lema de esta web en blanco sobre gris oscuro: «Software que funciona bien. Y se ve bien.»"
 destacado: true
 orden: 3
 borrador: false
