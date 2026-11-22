@@ -6,6 +6,7 @@ import { marcarPortadaParaTransicion } from "@/movimiento/transicionesDePagina";
 import { getRutaProyecto } from "@/rutas";
 import ImagenOptimizada from "./ImagenOptimizada.vue";
 import ImagenPendiente from "./ImagenPendiente.vue";
+import PortadaCodigoDelLema from "./PortadaCodigoDelLema.vue";
 
 /**
  * Ficha de un proyecto: portada y, debajo, título y frase a la izquierda y «Rama · periodo» a la
@@ -32,8 +33,10 @@ const portada = useTemplateRef<HTMLElement>("portada");
             :class="[proporcion, proyecto.portadaClara ? 'bg-superficie' : 'bg-superficie-fuerte']"
             data-revelar="imagen"
         >
+            <!-- La portada en HTML manda sobre la imagen; sin ninguna de las dos, el hueco. -->
+            <PortadaCodigoDelLema v-if="proyecto.portadaEnVivo === 'codigo-del-lema'" />
             <ImagenOptimizada
-                v-if="proyecto.portada"
+                v-else-if="proyecto.portada"
                 :imagen="proyecto.portada.imagen"
                 :alt="proyecto.portada.alt"
                 :anchos="anchos"

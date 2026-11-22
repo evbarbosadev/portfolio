@@ -32,6 +32,8 @@ export const ANCLA_CONTENIDO   = "contenido";
 export const ESTADOS_DE_PROYECTO    = ["activo", "terminado", "en pausa"] as const;
 export const ESTADOS_DE_EXPERIMENTO = ["en curso", "pausado", "uso propio", "archivado"] as const;
 export const PREFIJO_MARCADOR       = "[POR RELLENAR";
+// Portadas que no son una imagen, sino un trozo de la web hecho en HTML para el marco.
+export const PORTADAS_EN_VIVO       = ["codigo-del-lema"] as const;
 export const LONGITUD_MAX_RESUMEN   = 260;
 export const LONGITUD_MAX_FICHA     = 240;
 
@@ -43,3 +45,4 @@ export type Idioma = (typeof IDIOMAS)[number];
 export type Tema = typeof TEMA_CLARO | typeof TEMA_OSCURO;
 export type EstadoDeProyecto = (typeof ESTADOS_DE_PROYECTO)[number];
 export type EstadoDeExperimento = (typeof ESTADOS_DE_EXPERIMENTO)[number];
+export type PortadaEnVivo = (typeof PORTADAS_EN_VIVO)[number];

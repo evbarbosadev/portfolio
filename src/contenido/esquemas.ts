@@ -5,6 +5,7 @@ import {
     IDIOMAS,
     LONGITUD_MAX_FICHA,
     LONGITUD_MAX_RESUMEN,
+    PORTADAS_EN_VIVO,
     PREFIJO_MARCADOR,
     type Idioma,
 } from "../constantes.ts";
@@ -58,6 +59,8 @@ export const esquemaProyecto = z.strictObject({
         .default({}),
     /** Sin portada, la web pinta un hueco con «Portada pendiente». */
     portada: esquemaImagen.optional(),
+    /** Portada hecha en HTML en vez de imagen. Si la hay, manda sobre la portada en imagen. */
+    portadaEnVivo: z.enum(PORTADAS_EN_VIVO).optional(),
     /** La portada es clara: va sobre la superficie leve en vez de la oscura. */
     portadaClara: z.boolean().default(false),
     medios: z.array(esquemaImagen).default([]),

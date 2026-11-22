@@ -10,6 +10,7 @@ import EnlaceTexto from "@/componentes/base/EnlaceTexto.vue";
 import EtiquetaStack from "@/componentes/base/EtiquetaStack.vue";
 import ImagenOptimizada from "@/componentes/base/ImagenOptimizada.vue";
 import ImagenPendiente from "@/componentes/base/ImagenPendiente.vue";
+import PortadaCodigoDelLema from "@/componentes/base/PortadaCodigoDelLema.vue";
 import RejillaPagina from "@/componentes/base/RejillaPagina.vue";
 import { useCabecera } from "@/composables/useCabecera";
 import { useIdioma } from "@/composables/useIdioma";
@@ -90,8 +91,9 @@ useCabecera(() => {
                 class="portada-de-caso mt-8 aspect-video overflow-hidden rounded-grande"
                 :class="proyecto.portadaClara ? 'bg-superficie' : 'bg-superficie-fuerte'"
             >
+                <PortadaCodigoDelLema v-if="proyecto.portadaEnVivo === 'codigo-del-lema'" />
                 <ImagenOptimizada
-                    v-if="proyecto.portada"
+                    v-else-if="proyecto.portada"
                     :imagen="proyecto.portada.imagen"
                     :alt="proyecto.portada.alt"
                     anchos="(min-width: 80rem) 72rem, 92vw"
