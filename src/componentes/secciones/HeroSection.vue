@@ -236,7 +236,7 @@ onBeforeUnmount(() => {
                 </span>
             </h1>
 
-            <div class="hero-tardio mt-5 flex flex-wrap gap-1.5 delay-[120ms]">
+            <div class="hero-tardio mt-5 flex flex-wrap gap-1.5 delay-[200ms]">
                 <BotonEnlace :ancla="ANCLA_PROYECTOS">{{ t("hero.verProyectos") }}</BotonEnlace>
                 <BotonEnlace :ancla="ANCLA_CONTACTO" variante="secundario">
                     {{ t("hero.contacto") }}

@@ -184,28 +184,6 @@
     */
     --ease-salida: cubic-bezier(0.2, 0, 0, 1);
     --ease-cine: cubic-bezier(0.7, 0, 0.2, 1);
-
-    /*
-        MOVIMIENTO: ANIMACIONES DE ENTRADA
-        Son CSS puro para que arranquen con el primer pintado, sin esperar al JavaScript.
-        aparecer: fundido con 8 px de desplazamiento (todo lo demás).
-        recorte: una imagen de proyecto se descubre de abajo arriba (cinematográfico).
-    */
-    --animate-aparecer: aparecer var(--duracion-media) var(--ease-salida) both;
-    --animate-recorte: recorte var(--duracion-larga) var(--ease-cine) both;
-
-    @keyframes aparecer {
-        from {
-            opacity: 0;
-            transform: translateY(0.5rem);
-        }
-    }
-
-    @keyframes recorte {
-        from {
-            clip-path: inset(100% 0 0 0);
-        }
-    }
 }
 
 /* Utilidades duracion-breve, duracion-media... y retraso-* para escalonar entradas. */
@@ -215,15 +193,4 @@
 
 @utility retraso-* {
     animation-delay: --value(--duracion-*);
-}
-
-/*
-    MOVIMIENTO REDUCIDO
-    Con prefers-reduced-motion no se mueve nada: todo aparece ya en su sitio.
-*/
-@media (prefers-reduced-motion: reduce) {
-    :root {
-        --animate-aparecer: none;
-        --animate-recorte: none;
-    }
 }

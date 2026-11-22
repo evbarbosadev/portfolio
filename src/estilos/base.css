@@ -148,10 +148,14 @@ html:not(.js) .solo-js {
             filter 220ms var(--ease-salida);
     }
 
+    /*
+        Entra desenfocado y sin moverse, pero más despacio que un bloque (900 ms y 8 px, no 480 y
+        6): tras un lema que se escribe poco a poco, 480 ms se leía como un golpe.
+    */
     .hero-tardio {
         transition:
-            opacity var(--duracion-media) var(--ease-salida),
-            translate var(--duracion-media) var(--ease-salida);
+            opacity 900ms var(--ease-salida),
+            filter 900ms var(--ease-salida);
     }
 
     /* Una barra fina del alto de la letra que se desliza de letra en letra. */
@@ -197,7 +201,7 @@ html:not(.js) .solo-js {
 
         .js .hero-escrito:not([data-fase="hecho"]) .hero-tardio {
             opacity: 0;
-            translate: 0 0.5rem;
+            filter: blur(8px);
         }
 
         /* Red de seguridad: si el JavaScript no llega a arrancar, todo aparece a los 5 s. */
@@ -240,7 +244,6 @@ html:not(.js) .solo-js {
         to {
             opacity: 1;
             filter: none;
-            translate: none;
         }
     }
 
@@ -543,10 +546,10 @@ html:not(.js) .solo-js {
 
 /*
     TRANSICIONES ENTRE PÁGINAS (View Transitions API)
-    Cambiar de página es un movimiento mínimo: la vieja se apaga y la nueva entra con un fundido y
-    8 px de desplazamiento en 480 ms. Abrir un proyecto es un momento cinematográfico: la portada
-    de la tarjeta pulsada comparte nombre con la del caso de estudio y el navegador transforma una
-    en la otra en 1 s. Con movimiento reducido no hay transición: la página nueva aparece sin más.
+    Cambiar de página es un movimiento mínimo: la vieja se apaga y la nueva llega desde el fondo,
+    desenfocada y enfocándose en su sitio, en 480 ms (MOV-2). Abrir un proyecto es un momento
+    cinematográfico: la portada de la tarjeta pulsada comparte nombre con la del caso de estudio y
+    el navegador transforma una en la otra en 1 s. Con movimiento reducido no hay transición: la página nueva aparece sin más.
 */
 .portada-de-caso {
     view-transition-name: portada;
@@ -558,13 +561,20 @@ html:not(.js) .solo-js {
     }
 }
 
+@keyframes pagina-entra {
+    from {
+        opacity: 0;
+        filter: blur(6px);
+    }
+}
+
 @media (prefers-reduced-motion: no-preference) {
     ::view-transition-old(root) {
         animation: pagina-sale var(--duracion-media) var(--ease-salida) both;
     }
 
     ::view-transition-new(root) {
-        animation: var(--animate-aparecer);
+        animation: pagina-entra var(--duracion-media) var(--ease-salida) both;
     }
 
     ::view-transition-group(portada) {
