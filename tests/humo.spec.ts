@@ -226,20 +226,20 @@ test.describe("pantallas estrechas", () => {
 test.describe("idioma", () => {
     test("el selector lleva a la página principal equivalente", async ({ page }) => {
         await page.goto("/");
-        await page.locator('header a[hreflang="en"]').click();
+        await page.locator('header a[hreflang="en"]:visible').click();
 
         await expect(page).toHaveURL(/\/en$/);
         await expect(page.locator("html")).toHaveAttribute("lang", "en");
         await expect(page.locator("#proyectos h2")).toHaveText("Projects");
 
-        await page.locator('header a[hreflang="es"]').click();
+        await page.locator('header a[hreflang="es"]:visible').click();
         await expect(page).toHaveURL(/\/$/);
         await expect(page.locator("html")).toHaveAttribute("lang", "es");
     });
 
     test("el selector mantiene el caso de estudio equivalente", async ({ page }) => {
         await page.goto("/proyectos/nova");
-        await page.locator('header a[hreflang="en"]').click();
+        await page.locator('header a[hreflang="en"]:visible').click();
 
         await expect(page).toHaveURL(/\/en\/projects\/nova$/);
         await expect(page.locator("h1")).toHaveText("Nova");
@@ -303,7 +303,7 @@ test.describe("idioma automático", () => {
     test("el idioma elegido con el botón se respeta en la siguiente visita", async ({ page }) => {
         await page.goto("/");
         await esperarHidratacion(page);
-        await page.locator('header a[hreflang="es"]').click();
+        await page.locator('header a[hreflang="es"]:visible').click();
         await expect(page).toHaveURL(/:\d+\/$/);
 
         await page.goto("/");
@@ -393,7 +393,7 @@ test.describe("sin JavaScript", () => {
         await expect(page.locator("h1")).toHaveText("Nova");
         await expect(page.locator(".prosa p").first()).toBeVisible();
 
-        await page.locator('header a[hreflang="en"]').click();
+        await page.locator('header a[hreflang="en"]:visible').click();
         await expect(page).toHaveURL(/\/en\/projects\/nova$/);
     });
 });
