@@ -5,6 +5,8 @@ import { getRutaProyecto } from "@/rutas";
 import ImagenOptimizada from "./ImagenOptimizada.vue";
 import ImagenPendiente from "./ImagenPendiente.vue";
 import PortadaCodigoDelLema from "./PortadaCodigoDelLema.vue";
+import PortadaConversacionAndroid from "./PortadaConversacionAndroid.vue";
+import PortadaConversacionNova from "./PortadaConversacionNova.vue";
 
 /**
  * Ficha de un proyecto: portada y, debajo, título y frase a la izquierda y «Rama · periodo» a la
@@ -31,6 +33,12 @@ const { t } = useTextos();
         >
             <!-- La portada en HTML manda sobre la imagen; sin ninguna de las dos, el hueco. -->
             <PortadaCodigoDelLema v-if="proyecto.portadaEnVivo === 'codigo-del-lema'" />
+            <PortadaConversacionNova
+                v-else-if="proyecto.portadaEnVivo === 'conversacion-de-nova'"
+            />
+            <PortadaConversacionAndroid
+                v-else-if="proyecto.portadaEnVivo === 'conversacion-de-android'"
+            />
             <ImagenOptimizada
                 v-else-if="proyecto.portada"
                 :imagen="proyecto.portada.imagen"

@@ -8,6 +8,21 @@ export default {
         // Etiqueta del hueco de una imagen que aún no existe: «Portada pendiente · Vørlys».
         portadaPendiente: "Portada pendiente",
     },
+    // Conversación de ejemplo de la portada de Nova.
+    portadaAndroid: {
+        alt: "Conversación en la app de mensajería: «Hola!» y «Te apetece venir a comer a casa la semana que viene?».",
+        saludo: "Hola!",
+        horaSaludo: "03:04 a. m.",
+        invitacion: "Te apetece venir a comer a casa la semana que viene?",
+        horaInvitacion: "03:05 a. m.",
+    },
+    portadaNova: {
+        alt: "Conversación en Nova: le pido que me recuerde sobre las 11 que tengo que ir a por el coche al taller, y responde que me avisará a las 11:00.",
+        tu: "Tú",
+        pregunta: "Hey! recuérdame sobre las 11 o así que tengo que ir a por el coche al taller",
+        pensado: "Cómo lo ha pensado Nova",
+        respuesta: "Hecho. Te avisaré a las 11:00 para que vayas a por el coche al taller.",
+    },
     navegacion: {
         etiqueta: "Navegación principal",
         etiquetaMenu: "Menú de secciones",

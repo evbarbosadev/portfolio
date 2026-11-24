@@ -15,9 +15,7 @@ stack:
     - "WinUI 3"
     - "Kotlin"
     - "Firestore"
-portada:
-    src: "./portada.png"
-    alt: "A conversation in Nova: I ask it to remind me around 11 that I need to pick up the car from the garage, and it replies that it will let me know at 11:00."
+portadaEnVivo: conversacion-de-nova
 destacado: true
 orden: 1
 borrador: false

@@ -11,6 +11,8 @@ import EtiquetaStack from "@/componentes/base/EtiquetaStack.vue";
 import ImagenOptimizada from "@/componentes/base/ImagenOptimizada.vue";
 import ImagenPendiente from "@/componentes/base/ImagenPendiente.vue";
 import PortadaCodigoDelLema from "@/componentes/base/PortadaCodigoDelLema.vue";
+import PortadaConversacionAndroid from "@/componentes/base/PortadaConversacionAndroid.vue";
+import PortadaConversacionNova from "@/componentes/base/PortadaConversacionNova.vue";
 import RejillaPagina from "@/componentes/base/RejillaPagina.vue";
 import { useCabecera } from "@/composables/useCabecera";
 import { useIdioma } from "@/composables/useIdioma";
@@ -92,6 +94,12 @@ useCabecera(() => {
                 :class="proyecto.portadaClara ? 'bg-superficie' : 'bg-superficie-fuerte'"
             >
                 <PortadaCodigoDelLema v-if="proyecto.portadaEnVivo === 'codigo-del-lema'" />
+                <PortadaConversacionNova
+                    v-else-if="proyecto.portadaEnVivo === 'conversacion-de-nova'"
+                />
+                <PortadaConversacionAndroid
+                    v-else-if="proyecto.portadaEnVivo === 'conversacion-de-android'"
+                />
                 <ImagenOptimizada
                     v-else-if="proyecto.portada"
                     :imagen="proyecto.portada.imagen"

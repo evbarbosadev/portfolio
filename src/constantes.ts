@@ -33,7 +33,7 @@ export const ESTADOS_DE_PROYECTO    = ["activo", "terminado", "en pausa"] as con
 export const ESTADOS_DE_EXPERIMENTO = ["en curso", "pausado", "uso propio", "archivado"] as const;
 export const PREFIJO_MARCADOR       = "[POR RELLENAR";
 // Portadas que no son una imagen, sino un trozo de la web hecho en HTML para el marco.
-export const PORTADAS_EN_VIVO       = ["codigo-del-lema"] as const;
+export const PORTADAS_EN_VIVO       = ["codigo-del-lema", "conversacion-de-nova", "conversacion-de-android"] as const;
 export const LONGITUD_MAX_RESUMEN   = 260;
 export const LONGITUD_MAX_FICHA     = 240;
 

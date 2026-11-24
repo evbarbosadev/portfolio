@@ -9,6 +9,20 @@ const diccionario: DiccionarioParcial = {
         pestañaNueva: "(opens in a new tab)",
         portadaPendiente: "Cover pending",
     },
+    portadaAndroid: {
+        alt: "Conversation in the messaging app: “Hi!” and “Do you fancy coming over for lunch next week?”.",
+        saludo: "Hi!",
+        horaSaludo: "3:04 AM",
+        invitacion: "Do you fancy coming over for lunch next week?",
+        horaInvitacion: "3:05 AM",
+    },
+    portadaNova: {
+        alt: "Conversation in Nova: I ask it to remind me around 11 that I have to pick up the car from the garage, and it replies that it will remind me at 11:00.",
+        tu: "You",
+        pregunta: "Hey! remind me around 11, I have to go pick up the car from the garage",
+        pensado: "How Nova thought it through",
+        respuesta: "Done. I will remind you at 11:00 so you can pick up the car from the garage.",
+    },
     navegacion: {
         etiqueta: "Main navigation",
         etiquetaMenu: "Sections menu",

@@ -8,10 +8,14 @@ periodo: "DAM"
 estado: activo
 stack:
     - "Android"
-    - "[POR RELLENAR: stack]"
-enlaces:
-    repo: "[POR RELLENAR: URL del repositorio]"
+    - "Java"
+    - "XML"
+    - "MotionLayout"
+    - "Firebase"
+    - "Google Maps"
+    - "Retrofit"
 portadaClara: true
+portadaEnVivo: conversacion-de-android
 destacado: true
 orden: 4
 borrador: false
