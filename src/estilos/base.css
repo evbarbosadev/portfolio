@@ -208,8 +208,12 @@ html:not(.js) .solo-js {
         animation: apagado-de-cursor 1100ms ease-in-out forwards;
     }
 
-    /* Si no hay escritura (llega tarde, en segundo plano...), el cursor ni aparece. */
-    .hero-cursor.oculto {
+    /*
+        Si no hay escritura (llega tarde, en segundo plano, cambio de idioma...), el cursor ni
+        aparece. Con «.js» delante para ganar a «.js .hero-cursor», que lo muestra.
+    */
+    .hero-cursor.oculto,
+    .js .hero-cursor.oculto {
         display: none;
     }
 
