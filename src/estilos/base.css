@@ -104,13 +104,9 @@
 
     /*
         SCROLL A LOS ANCLAS
-        Suave por CSS; con movimiento reducido, instantáneo.
+        Sin scroll-behavior: el desplazamiento de los anclas lo anima utilidades/anclas.ts con una
+        duración según la distancia. El scroll del usuario es siempre el nativo.
     */
-    @media (prefers-reduced-motion: no-preference) {
-        html {
-            scroll-behavior: smooth;
-        }
-    }
 
     /*
         MOVIMIENTO REDUCIDO
