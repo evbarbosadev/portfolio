@@ -14,6 +14,7 @@ const diccionario: DiccionarioParcial = {
         etiquetaMenu: "Sections menu",
         saltar: "Skip to content",
         menu: "Menu",
+        cerrarMenu: "Close",
         inicio: "Home",
         proyectos: "Projects",
         sobreMi: "About",

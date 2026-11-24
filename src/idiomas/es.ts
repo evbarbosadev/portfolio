@@ -13,6 +13,7 @@ export default {
         etiquetaMenu: "Menú de secciones",
         saltar: "Saltar al contenido",
         menu: "Menú",
+        cerrarMenu: "Cerrar",
         inicio: "Inicio",
         proyectos: "Proyectos",
         sobreMi: "Sobre mí",

@@ -109,6 +109,34 @@
     */
 
     /*
+        MENÚ DEL MÓVIL
+        Entra y sale con el gesto del resto de la web: aparece desenfocado y se enfoca (decisión 19).
+        Cubre la pantalla entera, así que todo (controles incluidos) entra a la vez. El popover pasa
+        de display:none a visible, así que hace falta allow-discrete y @starting-style.
+    */
+    #menu-movil {
+        opacity: 0;
+        filter: blur(6px);
+        transition:
+            opacity var(--duracion-media) var(--ease-salida),
+            filter var(--duracion-media) var(--ease-salida),
+            display var(--duracion-media) allow-discrete,
+            overlay var(--duracion-media) allow-discrete;
+    }
+
+    #menu-movil:popover-open {
+        opacity: 1;
+        filter: blur(0);
+    }
+
+    @starting-style {
+        #menu-movil:popover-open {
+            opacity: 0;
+            filter: blur(6px);
+        }
+    }
+
+    /*
         MOVIMIENTO REDUCIDO
         Todo quieto: sin transiciones ni animaciones. Los cambios de estado son instantáneos.
     */

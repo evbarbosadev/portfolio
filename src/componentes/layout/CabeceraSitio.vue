@@ -74,9 +74,28 @@ function irDesdeMenu(evento: MouseEvent, ancla: string) {
             ref="menuMovil"
             popover
             :aria-label="t('navegacion.etiquetaMenu')"
-            class="fixed inset-x-0 top-cabecera bottom-0 m-0 size-auto bg-fondo px-margen pt-4 text-texto"
+            class="fixed inset-0 m-0 size-auto bg-fondo text-texto"
         >
-            <ul class="grid gap-2 text-entradilla">
+            <!-- El menú cubre la pantalla entera, cabecera incluida, así que lleva su propia fila de controles en el mismo sitio. -->
+            <div
+                class="mx-auto flex h-cabecera max-w-pagina items-center justify-between gap-3 px-margen text-detalle text-texto-suave"
+            >
+                <button
+                    type="button"
+                    popovertarget="menu-movil"
+                    popovertargetaction="hide"
+                    class="-mx-1 px-1 py-1.5 text-texto"
+                >
+                    {{ t("navegacion.cerrarMenu") }}
+                </button>
+
+                <div class="flex items-center gap-4">
+                    <IdiomaSelector />
+                    <TemaToggle />
+                </div>
+            </div>
+
+            <ul class="mx-auto grid max-w-pagina gap-2 px-margen pt-4 text-entradilla">
                 <li v-for="enlace in enlaces" :key="enlace.ancla">
                     <a
                         :href="getHrefDeSeccion(enlace.ancla)"
