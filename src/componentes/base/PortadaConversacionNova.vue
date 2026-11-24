@@ -2,9 +2,9 @@
 import { useTextos } from "@/composables/useTextos";
 
 /**
- * Portada de Nova hecha en HTML: una conversación de ejemplo con los colores y las tipografías de
- * la propia app (obsidiana cálida, Source Sans para el usuario y Source Serif para Nova). Se ajusta
- * sola al marco, sea 4:3 en la tarjeta o 16:9 en el caso.
+ * Portada de Nova hecha en HTML: una conversación de ejemplo con los colores de la propia app
+ * (obsidiana cálida). El texto va en Vørlys Sans, la de la web, para no cargar más fuentes. Se
+ * ajusta sola al marco, sea 4:3 en la tarjeta o 16:9 en el caso.
  */
 
 const { t } = useTextos();
@@ -16,9 +16,7 @@ const { t } = useTextos();
         <span class="portada-de-nova__conversacion" aria-hidden="true">
             <span class="portada-de-nova__meta">{{ t("portadaNova.tu") }} 09:10 ✓</span>
             <span class="portada-de-nova__usuario">{{ t("portadaNova.pregunta") }}</span>
-            <span class="portada-de-nova__pensado">
-                <b>›</b>{{ t("portadaNova.pensado") }}
-            </span>
+            <span class="portada-de-nova__pensado"> <b>›</b>{{ t("portadaNova.pensado") }} </span>
             <span class="portada-de-nova__nombre">
                 <svg viewBox="0 0 100 100" fill="none" stroke-linecap="round">
                     <path

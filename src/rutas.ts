@@ -15,6 +15,7 @@ import {
     type Idioma,
 } from "./constantes";
 import { buscarProyecto, buscarTraduccion } from "./contenido/consultas";
+import { esCambioDeIdioma } from "./movimiento/transicionesDePagina";
 
 const InicioPage = () => import("./paginas/InicioPage.vue");
 const ProyectoPage = () => import("./paginas/ProyectoPage.vue");
@@ -122,6 +123,11 @@ export function getRutasDePrerender(): string[] {
 export const comportamientoDeScroll: RouterScrollBehavior = (destino, origen, posicionGuardada) => {
     if (posicionGuardada) {
         return posicionGuardada;
+    }
+
+    // Cambiar de idioma deja la página en su sitio (MOV-9): solo cambia el texto.
+    if (esCambioDeIdioma(destino, origen)) {
+        return false;
     }
 
     if (destino.hash) {

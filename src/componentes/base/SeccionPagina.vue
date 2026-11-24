@@ -15,7 +15,7 @@ defineProps<{
 <template>
     <section :id="ancla" class="pt-seccion" :aria-labelledby="`titulo-${ancla}`">
         <ContenedorPagina>
-            <div class="mb-4 flex items-baseline justify-between gap-2" data-revelar="bloque">
+            <div class="mb-4 flex items-baseline justify-between gap-2" data-revelar="titulo">
                 <h2 :id="`titulo-${ancla}`" class="text-titulo-2" tabindex="-1">{{ titulo }}</h2>
                 <p v-if="etiqueta" class="font-mono text-etiqueta text-texto-suave uppercase">
                     {{ etiqueta }}

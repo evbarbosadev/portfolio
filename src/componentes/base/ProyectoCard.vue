@@ -53,7 +53,7 @@ const { t } = useTextos();
 
         <div
             class="mt-2.5 grid gap-0.5 tablet:grid-cols-[minmax(0,1fr)_auto] tablet:items-baseline tablet:gap-3"
-            data-revelar="bloque"
+            data-revelar="texto"
         >
             <div>
                 <h3 class="text-titulo-3 wrap-anywhere">

@@ -4,6 +4,7 @@ import { CustomEase } from "gsap/CustomEase";
 export interface TokensDeMovimiento {
     breve: number;
     media: number;
+    scroll: number;
     larga: number;
     salida: string;
     cine: string;
@@ -38,6 +39,7 @@ export function leerTokensDeMovimiento(): TokensDeMovimiento {
     return {
         breve: leerDuracion("breve"),
         media: leerDuracion("media"),
+        scroll: leerDuracion("scroll"),
         larga: leerDuracion("larga"),
         salida: crearCurva("salida"),
         cine: crearCurva("cine"),

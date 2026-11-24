@@ -1,10 +1,38 @@
-import type { Router } from "vue-router";
+import type { RouteLocationNormalized, Router } from "vue-router";
+import { IDIOMA_POR_DEFECTO } from "@/constantes";
 
 /*
     Transiciones entre páginas con la View Transitions API del navegador. No necesita librerías:
     el navegador captura la página vieja y la nueva y las funde; los estilos están en base.css.
     Donde la API no existe, la navegación es directa.
+    Hay dos clases de cambio (MOV-9): ir a otra página entra desde el fondo, con desenfoque; cambiar
+    de idioma deja la página en su sitio y solo funde el texto, sin desenfoque. <html> lleva
+    data-transicion="idioma" mientras dura el segundo, y base.css elige la animación por él.
 */
+
+/**
+ * Marca en <html> qué clase de transición está en curso, o la quita.
+ */
+export function marcarTransicion(tipo: "idioma" | "tema" | undefined) {
+    if (tipo) {
+        document.documentElement.dataset.transicion = tipo;
+    } else {
+        delete document.documentElement.dataset.transicion;
+    }
+}
+
+/**
+ * Dice si una navegación solo cambia el idioma: la página es la misma, en el otro idioma.
+ */
+export function esCambioDeIdioma(
+    destino: RouteLocationNormalized,
+    origen: RouteLocationNormalized,
+) {
+    const idiomaDeOrigen = origen.meta.idioma ?? IDIOMA_POR_DEFECTO;
+    const idiomaDeDestino = destino.meta.idioma ?? IDIOMA_POR_DEFECTO;
+
+    return origen.matched.length > 0 && idiomaDeOrigen !== idiomaDeDestino;
+}
 
 /**
  * Envuelve cada cambio de página en una transición de vista.
@@ -34,11 +62,15 @@ export function activarTransicionesDePagina(router: Router) {
                 terminarTransicion = resolver;
             });
 
-            document.startViewTransition(() => {
+            marcarTransicion(esCambioDeIdioma(destino, origen) ? "idioma" : undefined);
+
+            const transicion = document.startViewTransition(() => {
                 continuarNavegacion();
 
                 return paginaNuevaLista;
             });
+
+            transicion.finished.finally(() => marcarTransicion(undefined));
         });
     });
 

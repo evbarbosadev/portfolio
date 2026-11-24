@@ -170,17 +170,22 @@
         MOVIMIENTO: DURACIONES
         El bloque es "static" para que todas las variables existan siempre en :root: el JavaScript
         de movimiento (GSAP) lee de aquí duraciones y curvas, y así no hay una segunda copia.
-        breve: respuesta al ratón. media: fundido de todo lo que entra. larga: momentos
-        cinematográficos (titular del hero, imágenes de proyecto, abrir un proyecto).
+        Valores de tokens.json de la marca (decisión 53).
+        breve: respuesta al ratón y al pulsar. texto: cambio de idioma. tema: cambio de tema claro
+        y oscuro. media: cambio de página y menú del móvil. scroll: lo que entra al hacer scroll
+        (títulos, párrafos, filas, pies de ficha). larga: portadas al hacer scroll y abrir un proyecto.
     */
     --duracion-breve: 120ms;
+    --duracion-texto: 200ms;
+    --duracion-tema: 280ms;
     --duracion-media: 480ms;
+    --duracion-scroll: 700ms;
     --duracion-larga: 1000ms;
 
     /*
         MOVIMIENTO: CURVAS
-        salida: casi todo; frena al final.
-        cine: los momentos cinematográficos; lenta en los dos extremos.
+        salida: casi todo, portadas al hacer scroll incluidas; frena al final.
+        cine: solo el viaje de la portada al abrir un proyecto; lenta en los dos extremos.
     */
     --ease-salida: cubic-bezier(0.2, 0, 0, 1);
     --ease-cine: cubic-bezier(0.7, 0, 0.2, 1);

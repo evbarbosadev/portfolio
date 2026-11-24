@@ -24,14 +24,14 @@ const CLASES_VALOR = "mb-1.5 tablet:mb-0";
     <SeccionPagina :ancla="ANCLA_SOBRE_MI" :titulo="t('sobreMi.titulo')">
         <div class="grid gap-4 tablet:grid-cols-2 tablet:gap-8">
             <!-- whitespace-pre-line respeta los saltos de línea del texto como párrafos. -->
-            <p class="text-entradilla whitespace-pre-line" data-revelar="bloque">
+            <p class="text-entradilla whitespace-pre-line" data-revelar="texto">
                 {{ sitio.sobreMi[idioma] }}
             </p>
 
             <!-- Ficha corta: nada de listas largas de tecnologías. -->
             <dl
                 class="grid gap-x-3 gap-y-0.5 tablet:grid-cols-[8.75rem_minmax(0,1fr)] tablet:gap-y-2"
-                data-revelar="bloque"
+                data-revelar="texto"
             >
                 <template v-if="trabajoActual">
                     <dt :class="CLASES_ETIQUETA">{{ t("sobreMi.ahora") }}</dt>

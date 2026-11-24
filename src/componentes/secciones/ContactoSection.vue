@@ -20,12 +20,12 @@ const { idioma } = useIdioma();
                 id="titulo-contacto"
                 class="font-mono text-etiqueta text-texto-suave uppercase"
                 tabindex="-1"
-                data-revelar="bloque"
+                data-revelar="titulo"
             >
                 {{ t("contacto.titulo") }}
             </h2>
 
-            <p class="mt-2 mb-4 text-correo wrap-anywhere" data-revelar="bloque">
+            <p class="mt-2 mb-4 text-correo wrap-anywhere" data-revelar="texto">
                 <span v-if="esMarcador(sitio.email)" class="text-texto-suave">{{
                     sitio.email
                 }}</span>
@@ -38,7 +38,7 @@ const { idioma } = useIdioma();
                 </a>
             </p>
 
-            <ul class="flex flex-wrap gap-x-4 gap-y-2 text-texto-suave" data-revelar="bloque">
+            <ul class="flex flex-wrap gap-x-4 gap-y-2 text-texto-suave" data-revelar="texto">
                 <li>
                     <EnlaceOMarcador :href="sitio.enlaces.linkedin">
                         {{ t("contacto.linkedin") }}

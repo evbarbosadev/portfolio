@@ -688,8 +688,8 @@ html:not(.js) .solo-js {
     .portada-de-nova__nombre svg {
         width: calc(2.583 * var(--unidad));
         height: calc(2.583 * var(--unidad));
-        margin: calc(-0.333 * var(--unidad)) calc(-0.25 * var(--unidad)) calc(-0.333 * var(--unidad))
-            calc(-0.333 * var(--unidad));
+        margin: calc(-0.333 * var(--unidad)) calc(-0.25 * var(--unidad))
+            calc(-0.333 * var(--unidad)) calc(-0.333 * var(--unidad));
         color: var(--nova-sello);
     }
 
@@ -717,6 +717,7 @@ html:not(.js) .solo-js {
     Cambiar de página es un movimiento mínimo: la vieja se apaga y la nueva llega desde el fondo,
     desenfocada y enfocándose en su sitio, en 480 ms (MOV-2). Vale igual para ir a un proyecto y para
     volver: no hay transformación de la portada, para que el texto y la imagen lleguen a la vez.
+    Cambiar de idioma o de tema no es cambiar de página: se funde en su sitio, sin desenfoque (MOV-9).
     Con movimiento reducido no hay transición: la página nueva aparece sin más.
 */
 
@@ -733,6 +734,19 @@ html:not(.js) .solo-js {
     }
 }
 
+/* Lo que cambia en su sitio (idioma y tema) se funde sin desenfoque (MOV-9). */
+@keyframes fundido-sale {
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fundido-entra {
+    from {
+        opacity: 0;
+    }
+}
+
 @media (prefers-reduced-motion: no-preference) {
     ::view-transition-old(root) {
         animation: pagina-sale var(--duracion-media) var(--ease-salida) both;
@@ -740,6 +754,24 @@ html:not(.js) .solo-js {
 
     ::view-transition-new(root) {
         animation: pagina-entra var(--duracion-media) var(--ease-salida) both;
+    }
+
+    /* Cambio de idioma: la página se queda en su sitio y el texto se funde en 200 ms. */
+    html[data-transicion="idioma"]::view-transition-old(root) {
+        animation: fundido-sale var(--duracion-texto) var(--ease-salida) both;
+    }
+
+    html[data-transicion="idioma"]::view-transition-new(root) {
+        animation: fundido-entra var(--duracion-texto) var(--ease-salida) both;
+    }
+
+    /* Cambio de tema: la pantalla entera se funde del viejo al nuevo en 280 ms, de una pasada. */
+    html[data-transicion="tema"]::view-transition-old(root) {
+        animation: fundido-sale var(--duracion-tema) var(--ease-salida) both;
+    }
+
+    html[data-transicion="tema"]::view-transition-new(root) {
+        animation: fundido-entra var(--duracion-tema) var(--ease-salida) both;
     }
 }
 

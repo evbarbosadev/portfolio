@@ -16,7 +16,7 @@ const { t } = useTextos();
 <template>
     <article
         class="grid gap-0.5 py-2.5 tablet:grid-cols-[7.5rem_minmax(0,1fr)_minmax(0,1.4fr)] tablet:items-baseline tablet:gap-3"
-        data-revelar="bloque"
+        data-revelar="fila"
     >
         <p class="font-mono text-etiqueta text-texto-suave uppercase">
             {{ t(CLAVE_DE_ESTADO_DE_EXPERIMENTO[experimento.estado]) }}

@@ -1,5 +1,13 @@
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { CLAVE_TEMA, CONSULTA_TEMA_OSCURO, TEMA_CLARO, TEMA_OSCURO, type Tema } from "@/constantes";
+import {
+    CLAVE_TEMA,
+    CONSULTA_MOVIMIENTO_REDUCIDO,
+    CONSULTA_TEMA_OSCURO,
+    TEMA_CLARO,
+    TEMA_OSCURO,
+    type Tema,
+} from "@/constantes";
+import { marcarTransicion } from "@/movimiento/transicionesDePagina";
 
 /**
  * Tema claro u oscuro. El tema inicial lo fija public/tema.js antes del primer pintado; aquí se
@@ -30,11 +38,30 @@ export function useTema() {
     }
 
     /**
+     * Aplica un tema fundiendo la pantalla entera del viejo al nuevo en una sola pasada (MOV-9),
+     * sin desenfoque. Sin la View Transitions API, o con movimiento reducido, el cambio es directo.
+     */
+    function aplicarTemaConFundido(tema: Tema) {
+        const puedeFundir =
+            "startViewTransition" in document && !matchMedia(CONSULTA_MOVIMIENTO_REDUCIDO).matches;
+
+        if (!puedeFundir) {
+            aplicarTema(tema);
+
+            return;
+        }
+
+        marcarTransicion("tema");
+        const transicion = document.startViewTransition(() => aplicarTema(tema));
+        transicion.finished.finally(() => marcarTransicion(undefined));
+    }
+
+    /**
      * Cambia al otro tema y recuerda la elección para las próximas visitas.
      */
     function alternarTema() {
         const temaNuevo: Tema = estaOscuro.value ? TEMA_CLARO : TEMA_OSCURO;
-        aplicarTema(temaNuevo);
+        aplicarTemaConFundido(temaNuevo);
 
         try {
             localStorage.setItem(CLAVE_TEMA, temaNuevo);
@@ -51,7 +78,7 @@ export function useTema() {
             return;
         }
 
-        aplicarTema(evento.matches ? TEMA_OSCURO : TEMA_CLARO);
+        aplicarTemaConFundido(evento.matches ? TEMA_OSCURO : TEMA_CLARO);
     }
 
     /**
