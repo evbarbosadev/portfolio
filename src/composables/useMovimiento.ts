@@ -55,10 +55,14 @@ export function useMovimiento() {
         }
     });
 
-    // Tras cada cambio de página, con el DOM nuevo ya pintado, se preparan sus animaciones.
+    /*
+        Tras cada cambio de página, con el DOM nuevo ya pintado, se preparan sus animaciones. Se espera
+        a que el router coloque el scroll (al volver lo restaura): si no, lo que queda a la vista tras
+        restaurarlo se tomaría por "fuera de la ventana" y se revelaría con su animación.
+    */
     router.afterEach((destino, origen) => {
         if (destino.path !== origen.path) {
-            nextTick(() => coreografia?.prepararPagina());
+            nextTick(() => setTimeout(() => coreografia?.prepararPagina()));
         }
     });
 

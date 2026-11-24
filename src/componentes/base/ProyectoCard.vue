@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { ProyectoCargado } from "virtual:contenido";
-import { useTemplateRef } from "vue";
 import { useTextos } from "@/composables/useTextos";
-import { marcarPortadaParaTransicion } from "@/movimiento/transicionesDePagina";
 import { getRutaProyecto } from "@/rutas";
 import ImagenOptimizada from "./ImagenOptimizada.vue";
 import ImagenPendiente from "./ImagenPendiente.vue";
@@ -21,14 +19,12 @@ defineProps<{
 }>();
 
 const { t } = useTextos();
-const portada = useTemplateRef<HTMLElement>("portada");
 </script>
 
 <template>
     <article class="group relative">
         <!-- Sin marco ni sombra: la portada va sobre la superficie oscura, o la leve si es clara. -->
         <div
-            ref="portada"
             class="overflow-hidden rounded-grande"
             :class="[proporcion, proyecto.portadaClara ? 'bg-superficie' : 'bg-superficie-fuerte']"
             data-revelar="imagen"
@@ -60,7 +56,6 @@ const portada = useTemplateRef<HTMLElement>("portada");
                     <RouterLink
                         :to="getRutaProyecto(proyecto)"
                         class="transition-colors duracion-breve ease-salida group-hover:text-texto-suave after:absolute after:inset-0"
-                        @click="marcarPortadaParaTransicion(portada)"
                     >
                         {{ proyecto.titulo }}
                     </RouterLink>

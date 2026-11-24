@@ -575,13 +575,10 @@ html:not(.js) .solo-js {
 /*
     TRANSICIONES ENTRE PÁGINAS (View Transitions API)
     Cambiar de página es un movimiento mínimo: la vieja se apaga y la nueva llega desde el fondo,
-    desenfocada y enfocándose en su sitio, en 480 ms (MOV-2). Abrir un proyecto es un momento
-    cinematográfico: la portada de la tarjeta pulsada comparte nombre con la del caso de estudio y
-    el navegador transforma una en la otra en 1 s. Con movimiento reducido no hay transición: la página nueva aparece sin más.
+    desenfocada y enfocándose en su sitio, en 480 ms (MOV-2). Vale igual para ir a un proyecto y para
+    volver: no hay transformación de la portada, para que el texto y la imagen lleguen a la vez.
+    Con movimiento reducido no hay transición: la página nueva aparece sin más.
 */
-.portada-de-caso {
-    view-transition-name: portada;
-}
 
 @keyframes pagina-sale {
     to {
@@ -603,11 +600,6 @@ html:not(.js) .solo-js {
 
     ::view-transition-new(root) {
         animation: pagina-entra var(--duracion-media) var(--ease-salida) both;
-    }
-
-    ::view-transition-group(portada) {
-        animation-duration: var(--duracion-larga);
-        animation-timing-function: var(--ease-cine);
     }
 }
 

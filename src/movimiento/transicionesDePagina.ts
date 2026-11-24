@@ -1,24 +1,10 @@
 import type { Router } from "vue-router";
-import { CONSULTA_MOVIMIENTO_REDUCIDO } from "@/constantes";
 
 /*
     Transiciones entre páginas con la View Transitions API del navegador. No necesita librerías:
     el navegador captura la página vieja y la nueva y las funde; los estilos están en base.css.
     Donde la API no existe, la navegación es directa.
 */
-
-// Nombre que comparten la portada de una tarjeta y la del caso de estudio para fundirse entre sí.
-export const NOMBRE_DE_TRANSICION_DE_PORTADA = "portada";
-
-/**
- * Marca la portada de una tarjeta para que, al navegar a su caso de estudio, se transforme en la
- * portada de la página nueva. Con movimiento reducido no se marca y queda solo el fundido.
- */
-export function marcarPortadaParaTransicion(portada: HTMLElement | null) {
-    if (portada && !matchMedia(CONSULTA_MOVIMIENTO_REDUCIDO).matches) {
-        portada.style.viewTransitionName = NOMBRE_DE_TRANSICION_DE_PORTADA;
-    }
-}
 
 /**
  * Envuelve cada cambio de página en una transición de vista.
