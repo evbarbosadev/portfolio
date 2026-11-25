@@ -1,15 +1,17 @@
 import { useHead } from "@unhead/vue";
 
 /**
- * Punto de integración para analítica respetuosa, sin cookies (Plausible o Umami). Está apagado:
- * solo se activa si se define VITE_ANALITICA_SCRIPT en el entorno. Con la variable vacía, el build
+ * Analítica con Umami Cloud: sin cookies y sin guardar la IP, así que no hace falta banner. Solo se
+ * activa si están definidas VITE_ANALITICA_SCRIPT y VITE_ANALITICA_ID; si falta alguna, el build
  * elimina este código y no se carga nada.
  *
- * Al activarlo hay que añadir el dominio del script a script-src y connect-src en firebase.json.
- * Plausible lee data-domain; para Umami se cambia ese atributo por data-website-id.
+ * - data-domains: solo cuenta las visitas al dominio público, no las de localhost ni las del túnel.
+ * - data-do-not-track: respeta la preferencia «no rastrear» del navegador.
+ *
+ * El dominio del script y el de envío están en script-src y connect-src de firebase.json.
  */
 export function useAnalitica() {
-    if (!import.meta.env.VITE_ANALITICA_SCRIPT) {
+    if (!import.meta.env.VITE_ANALITICA_SCRIPT || !import.meta.env.VITE_ANALITICA_ID) {
         return;
     }
 
@@ -18,7 +20,9 @@ export function useAnalitica() {
             {
                 src: import.meta.env.VITE_ANALITICA_SCRIPT,
                 defer: true,
-                "data-domain": import.meta.env.VITE_ANALITICA_DOMINIO,
+                "data-website-id": import.meta.env.VITE_ANALITICA_ID,
+                "data-domains": new URL(import.meta.env.VITE_URL_SITIO).hostname,
+                "data-do-not-track": "true",
             },
         ],
     });

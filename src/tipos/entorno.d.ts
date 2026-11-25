@@ -7,8 +7,8 @@ declare global {
         readonly VITE_URL_SITIO: string;
         /** URL del script de analítica. Vacío = desactivada. */
         readonly VITE_ANALITICA_SCRIPT: string;
-        /** Dominio que se declara al script de analítica. */
-        readonly VITE_ANALITICA_DOMINIO: string;
+        /** ID del sitio en Umami (data-website-id). Vacío = desactivada. */
+        readonly VITE_ANALITICA_ID: string;
     }
 }
 

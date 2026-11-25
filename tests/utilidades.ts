@@ -17,11 +17,17 @@ export function getRutasDelSitio(): string[] {
  * Empieza a apuntar los errores de la página: excepciones de JavaScript y errores de consola,
  * que incluyen los bloqueos de la política de seguridad de contenido (CSP).
  */
+const ORIGEN_ANALITICA = "https://cloud.umami.is";
+
 export function vigilarErrores(page: Page): string[] {
     const errores: string[] = [];
 
     page.on("pageerror", (error) => errores.push(error.message));
     page.on("console", (mensaje) => {
+        // La analítica es de un tercero: si su servidor no responde, no es un fallo de la web.
+        if (mensaje.location().url.startsWith(ORIGEN_ANALITICA)) {
+            return;
+        }
         if (mensaje.type() === "error") {
             errores.push(mensaje.text());
         }
