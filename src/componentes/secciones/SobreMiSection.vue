@@ -14,8 +14,9 @@ const { idioma } = useIdioma();
 const trabajoActual = computed(() => getExperiencias(idioma.value)[0]);
 const trabajoAnterior = computed(() => getExperiencias(idioma.value)[1]);
 
-// La etiqueta en mono baja un poco para alinearse con la primera línea del valor.
-const CLASES_ETIQUETA = "pt-px font-mono text-etiqueta/[1.6] text-texto-suave uppercase";
+// En dos columnas, la etiqueta en mono comparte línea base con la primera línea del valor
+// (items-baseline en el <dl>).
+const CLASES_ETIQUETA = "font-mono text-etiqueta/[1.6] text-texto-suave uppercase";
 // En móvil cada pareja va seguida y se separa de la siguiente por espacio.
 const CLASES_VALOR = "mb-1.5 tablet:mb-0";
 </script>
@@ -30,7 +31,7 @@ const CLASES_VALOR = "mb-1.5 tablet:mb-0";
 
             <!-- Ficha corta: nada de listas largas de tecnologías. -->
             <dl
-                class="grid gap-x-3 gap-y-0.5 tablet:grid-cols-[8.75rem_minmax(0,1fr)] tablet:gap-y-2"
+                class="grid gap-x-3 gap-y-0.5 tablet:grid-cols-[8.75rem_minmax(0,1fr)] tablet:items-baseline tablet:gap-y-2"
                 data-revelar="texto"
             >
                 <template v-if="trabajoActual">
