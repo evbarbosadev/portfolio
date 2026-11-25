@@ -703,7 +703,6 @@ html:not(.js) .solo-js {
         max-width: 88%;
         padding: calc(2.167 * var(--unidad)) calc(1.667 * var(--unidad)) calc(2.167 * var(--unidad))
             calc(2.333 * var(--unidad));
-        border: calc(0.167 * var(--unidad)) solid var(--nova-elevada);
         border-radius: calc(2 * var(--unidad));
         background-color: var(--nova-superficie);
         font-size: calc(2.15 * var(--unidad));
