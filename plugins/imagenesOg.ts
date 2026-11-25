@@ -13,6 +13,9 @@ import { leerContenido } from "./contenidoPlugin.ts";
     La de inicio lleva el nombre y el rol; la de cada proyecto, el título y una etiqueta en mono
     («SOFTWARE · 2026 · VINÍCIUS BARBOSA»). El resumen no va en la imagen: ya sale en og:description.
 
+    La de inicio va centrada y con el nombre en dos líneas: WhatsApp, cuando enseña la vista previa
+    pequeña, recorta un cuadrado del centro de la imagen, y así el nombre entero cabe en ese cuadrado.
+
     satori no lee woff2, así que usa copias en woff: Vørlys Sans, convertida con fontTools desde
     src/recursos/fuentes/VorlysSans-Regular.woff2, y Geist Mono 400 (subconjunto latino), sacada tal cual
     de @fontsource/geist-mono 5.3.0, la misma versión que usa la web. Si una fuente cambia, hay que
@@ -59,6 +62,8 @@ const SEPARACION_SIMBOLO = 48;
 // La tarjeta del proyecto Vørlys no firma: su título ya es el nombre de la marca, y la regla
 // «una sola V» no deja juntar nombre y símbolo.
 const ID_PROYECTO_DE_LA_MARCA = "vorlys";
+// Tarjeta de inicio, centrada: el nombre en dos líneas, más grande que el título de un proyecto.
+const TAMAÑO_NOMBRE = 120;
 
 /**
  * Distancia de la línea base al borde inferior de la caja de una línea de texto: la mitad del
@@ -107,6 +112,10 @@ interface TarjetaOg {
     subtitulo: string;
     estiloSubtitulo: EstiloDeLinea;
     llevaFirma: boolean;
+    /** Contenido centrado (la de inicio) o apoyado abajo a la izquierda (las de proyecto). */
+    centrada: boolean;
+    /** Líneas del título cuando va centrado; si no, el título parte donde haga falta. */
+    lineasTitulo?: string[];
 }
 
 /**
@@ -135,6 +144,8 @@ function getTarjetas(raiz: string): TarjetaOg[] {
         subtitulo: sitio.rol[idioma],
         estiloSubtitulo: ESTILO_ROL,
         llevaFirma: true,
+        centrada: true,
+        lineasTitulo: sitio.nombreEnLineas,
     }));
 
     const tarjetasDeProyecto = proyectos.map(({ id, datos }) => ({
@@ -143,6 +154,7 @@ function getTarjetas(raiz: string): TarjetaOg[] {
         subtitulo: [datos.rama, datos.periodo, nombre].join(" · ").toLocaleUpperCase(datos.idioma),
         estiloSubtitulo: ESTILO_ETIQUETA,
         llevaFirma: id !== ID_PROYECTO_DE_LA_MARCA,
+        centrada: false,
     }));
 
     return [...tarjetasDeInicio, ...tarjetasDeProyecto];
@@ -173,6 +185,15 @@ export async function generarImagenesOg(raiz: string, carpetaSalida: string) {
     mkdirSync(join(carpetaSalida, CARPETA_OG), { recursive: true });
 
     for (const tarjeta of getTarjetas(raiz)) {
+        if (tarjeta.centrada) {
+            const svg = await satori(
+                getArbolCentrado(tarjeta, { colorFondo, colorTexto, colorSuave, urlSimbolo }),
+                { width: ANCHO_OG, height: ALTO_OG, fonts: fuentes },
+            );
+            writeFileSync(join(carpetaSalida, tarjeta.ruta), new Resvg(svg).render().asPng());
+            continue;
+        }
+
         const distanciaBaseAFondo = getDistanciaBaseAFondo(tarjeta.estiloSubtitulo);
         // satori recibe un árbol de elementos como el de React, pero escrito como objetos planos.
         const svg = await satori(
@@ -274,4 +295,78 @@ export async function generarImagenesOg(raiz: string, carpetaSalida: string) {
 
         writeFileSync(join(carpetaSalida, tarjeta.ruta), new Resvg(svg).render().asPng());
     }
+}
+
+interface ColoresDeTarjeta {
+    colorFondo: string;
+    colorTexto: string;
+    colorSuave: string;
+    urlSimbolo: string;
+}
+
+/**
+ * Árbol de la tarjeta centrada (la de inicio): nombre en dos líneas y rol debajo, en el centro.
+ * La firma va abajo a la derecha, en el mismo margen que en las de proyecto; en el recorte
+ * cuadrado de WhatsApp se queda fuera, y no pasa nada.
+ */
+function getArbolCentrado(tarjeta: TarjetaOg, colores: ColoresDeTarjeta) {
+    const lineas = tarjeta.lineasTitulo ?? [tarjeta.titulo];
+
+    return {
+        type: "div",
+        props: {
+            style: {
+                boxSizing: "border-box",
+                width: ANCHO_OG,
+                height: ALTO_OG,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: MARGEN,
+                backgroundColor: colores.colorFondo,
+                color: colores.colorTexto,
+                fontFamily: FUENTE_TEXTO,
+            },
+            children: [
+                ...lineas.map((linea) => ({
+                    type: "div",
+                    props: {
+                        style: {
+                            fontSize: TAMAÑO_NOMBRE,
+                            fontWeight: 400,
+                            lineHeight: 1,
+                            letterSpacing: "-0.03em",
+                        },
+                        children: linea,
+                    },
+                })),
+                {
+                    type: "div",
+                    props: {
+                        style: {
+                            ...tarjeta.estiloSubtitulo,
+                            marginTop: 40,
+                            fontWeight: 400,
+                            color: colores.colorSuave,
+                        },
+                        children: sinCortesEnGuiones(tarjeta.subtitulo),
+                    },
+                },
+                ...(tarjeta.llevaFirma
+                    ? [
+                          {
+                              type: "img",
+                              props: {
+                                  src: colores.urlSimbolo,
+                                  width: ANCHO_SIMBOLO,
+                                  height: ALTO_SIMBOLO,
+                                  style: { position: "absolute", right: MARGEN, bottom: MARGEN },
+                              },
+                          },
+                      ]
+                    : []),
+            ],
+        },
+    };
 }
