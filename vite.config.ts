@@ -15,12 +15,21 @@ const RAIZ = fileURLToPath(new URL(".", import.meta.url));
 const CARPETA_SALIDA = join(RAIZ, "dist");
 
 export default defineConfig(({ mode, isPreview }) => {
-    // URL pública del sitio, sin barra final. El dominio está por decidir: se lee del entorno (.env).
-    const urlSitio = (loadEnv(mode, RAIZ).VITE_URL_SITIO ?? "").replace(/\/$/, "");
+    // Sin prefijo, para leer también HOSTS_PERMITIDOS, que no debe acabar en el bundle.
+    const entorno = loadEnv(mode, RAIZ, "");
+    // URL pública del sitio, sin barra final. Se lee del entorno (.env).
+    const urlSitio = (entorno.VITE_URL_SITIO ?? "").replace(/\/$/, "");
+    // Hosts extra para el servidor de desarrollo, separados por comas (por ejemplo, un túnel para
+    // probar en el móvil). Van en .env.local, que no se sube al repo.
+    const hostsPermitidos = (entorno.HOSTS_PERMITIDOS ?? "")
+        .split(",")
+        .map((host) => host.trim())
+        .filter(Boolean);
 
     return {
         // En la vista previa no hay SPA de respaldo: cada dirección tiene su HTML, como en el hosting.
         appType: isPreview ? "mpa" : "spa",
+        server: { allowedHosts: hostsPermitidos },
         plugins: [
             // Los .md de los casos de estudio se compilan como componentes de Vue.
             vue({ include: [/\.vue$/, /\.md$/] }),
