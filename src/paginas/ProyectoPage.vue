@@ -13,6 +13,7 @@ import ImagenPendiente from "@/componentes/base/ImagenPendiente.vue";
 import PortadaCodigoDelLema from "@/componentes/base/PortadaCodigoDelLema.vue";
 import PortadaConversacionAndroid from "@/componentes/base/PortadaConversacionAndroid.vue";
 import PortadaConversacionNova from "@/componentes/base/PortadaConversacionNova.vue";
+import PortadaSimboloVorlys from "@/componentes/base/PortadaSimboloVorlys.vue";
 import RejillaPagina from "@/componentes/base/RejillaPagina.vue";
 import { useCabecera } from "@/composables/useCabecera";
 import { useIdioma } from "@/composables/useIdioma";
@@ -100,6 +101,7 @@ useCabecera(() => {
                 <PortadaConversacionAndroid
                     v-else-if="proyecto.portadaEnVivo === 'conversacion-de-android'"
                 />
+                <PortadaSimboloVorlys v-else-if="proyecto.portadaEnVivo === 'simbolo-de-vorlys'" />
                 <ImagenOptimizada
                     v-else-if="proyecto.portada"
                     :imagen="proyecto.portada.imagen"

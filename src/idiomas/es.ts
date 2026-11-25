@@ -16,6 +16,9 @@ export default {
         invitacion: "Te apetece venir a comer a casa la semana que viene?",
         horaInvitacion: "03:05 a. m.",
     },
+    portadaVorlys: {
+        alt: "El símbolo de Vørlys, con «Vørlys Sans · Geist Mono · 400» debajo.",
+    },
     portadaNova: {
         alt: "Conversación en Nova: le pido que me recuerde sobre las 11 que tengo que ir a por el coche al taller, y responde que me avisará a las 11:00.",
         tu: "Tú",

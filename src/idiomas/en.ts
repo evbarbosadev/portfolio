@@ -16,6 +16,9 @@ const diccionario: DiccionarioParcial = {
         invitacion: "Do you fancy coming over for lunch next week?",
         horaInvitacion: "3:05 AM",
     },
+    portadaVorlys: {
+        alt: "The Vørlys symbol, with “Vørlys Sans · Geist Mono · 400” below.",
+    },
     portadaNova: {
         alt: "Conversation in Nova: I ask it to remind me around 11 that I have to pick up the car from the garage, and it replies that it will remind me at 11:00.",
         tu: "You",

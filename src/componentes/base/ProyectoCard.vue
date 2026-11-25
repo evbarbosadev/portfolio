@@ -7,6 +7,7 @@ import ImagenPendiente from "./ImagenPendiente.vue";
 import PortadaCodigoDelLema from "./PortadaCodigoDelLema.vue";
 import PortadaConversacionAndroid from "./PortadaConversacionAndroid.vue";
 import PortadaConversacionNova from "./PortadaConversacionNova.vue";
+import PortadaSimboloVorlys from "./PortadaSimboloVorlys.vue";
 
 /**
  * Ficha de un proyecto: portada y, debajo, título y frase a la izquierda y «Rama · periodo» a la
@@ -39,6 +40,7 @@ const { t } = useTextos();
             <PortadaConversacionAndroid
                 v-else-if="proyecto.portadaEnVivo === 'conversacion-de-android'"
             />
+            <PortadaSimboloVorlys v-else-if="proyecto.portadaEnVivo === 'simbolo-de-vorlys'" />
             <ImagenOptimizada
                 v-else-if="proyecto.portada"
                 :imagen="proyecto.portada.imagen"

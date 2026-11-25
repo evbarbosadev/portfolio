@@ -526,15 +526,21 @@ html:not(.js) .solo-js {
         La portada del portfolio es HTML, no una imagen (PortadaCodigoDelLema.vue). Todo se mide en
         una unidad que sigue al ancho y al alto del marco: en 4:3 vale 1 % del ancho y en 16:9 un
         poco menos, para que el código quepa igual en los dos. Lleva su propia luz, muy leve.
+        Sigue al tema: en claro, gris claro con el lema en tinta; en oscuro, gris oscuro con el lema
+        en blanco.
     */
     .portada-de-codigo {
+        --codigo-luz-fuerte: light-dark(rgb(255 255 255 / 0.7), rgb(255 255 255 / 0.07));
+        --codigo-luz-leve: light-dark(rgb(255 255 255 / 0.5), rgb(255 255 255 / 0.05));
+
         position: relative;
         display: grid;
         place-content: center;
         width: 100%;
         height: 100%;
         container-type: size;
-        color: var(--color-gris-500);
+        background-color: light-dark(var(--color-gris-100), var(--color-gris-850));
+        color: light-dark(var(--color-gris-600), var(--color-gris-500));
     }
 
     .portada-de-codigo > * {
@@ -547,12 +553,12 @@ html:not(.js) .solo-js {
         background:
             radial-gradient(
                 calc(60 * var(--unidad)) calc(45 * var(--unidad)) at 85% 110%,
-                rgb(255 255 255 / 0.07),
+                var(--codigo-luz-fuerte),
                 transparent 70%
             ),
             radial-gradient(
                 calc(50 * var(--unidad)) calc(40 * var(--unidad)) at 0% 0%,
-                rgb(255 255 255 / 0.05),
+                var(--codigo-luz-leve),
                 transparent 70%
             );
     }
@@ -568,7 +574,50 @@ html:not(.js) .solo-js {
 
     .portada-de-codigo__codigo b {
         font-weight: 400;
-        color: var(--color-sobre-fuerte);
+        color: var(--color-texto);
+    }
+
+    /*
+        PORTADA DE VØRLYS
+        El símbolo grande con las fuentes de la web debajo, sobre el mismo gris que la portada de la
+        app de mensajería. La unidad es 1 % del ancho del marco, o 1,78 % de su alto si este manda,
+        para que en 16:9 quede como el PNG de antes y en 4:3 quepa igual. La barra proyecta una
+        sombra leve hacia la izquierda, como si la luz viniera de la derecha.
+    */
+    .portada-de-vorlys {
+        display: grid;
+        place-content: center;
+        justify-items: center;
+        width: 100%;
+        height: 100%;
+        container-type: size;
+        background-color: light-dark(var(--color-gris-100), var(--color-gris-850));
+        color: var(--color-texto);
+    }
+
+    .portada-de-vorlys > * {
+        --unidad: min(1cqw, 1.7778cqh);
+    }
+
+    .portada-de-vorlys__simbolo {
+        width: calc(22 * var(--unidad));
+        height: calc(22 * var(--unidad));
+        overflow: visible;
+    }
+
+    .portada-de-vorlys__sombra {
+        stroke: light-dark(rgb(0 0 0 / 0.16), rgb(0 0 0 / 0.5));
+        filter: blur(calc(0.6 * var(--unidad)));
+    }
+
+    .portada-de-vorlys__fuentes {
+        margin-top: calc(4 * var(--unidad));
+        color: var(--color-texto-suave);
+        font-family: var(--font-mono);
+        font-size: calc(1.25 * var(--unidad));
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        white-space: nowrap;
     }
 
     /*

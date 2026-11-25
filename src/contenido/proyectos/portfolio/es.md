@@ -15,6 +15,7 @@ stack:
 enlaces:
     repo: "https://github.com/evbarbosadev/portfolio"
 portadaEnVivo: codigo-del-lema
+portadaClara: true
 destacado: true
 orden: 3
 borrador: false
