@@ -79,7 +79,6 @@ const diccionario: DiccionarioParcial = {
         email: "Email",
         linkedin: "LinkedIn",
         github: "GitHub",
-        instagram: "Instagram",
         cv: "Download CV (PDF)",
     },
     caso: {

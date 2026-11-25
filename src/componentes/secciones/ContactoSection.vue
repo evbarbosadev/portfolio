@@ -50,11 +50,6 @@ const { idioma } = useIdioma();
                     </EnlaceOMarcador>
                 </li>
                 <li>
-                    <EnlaceOMarcador :href="sitio.enlaces.instagram">
-                        {{ t("contacto.instagram") }}
-                    </EnlaceOMarcador>
-                </li>
-                <li>
                     <!-- Cada idioma descarga su CV: /cv-es.pdf o /cv-en.pdf. -->
                     <EnlaceTexto :href="`/cv-${idioma}.pdf`" descarga>
                         {{ t("contacto.cv") }}

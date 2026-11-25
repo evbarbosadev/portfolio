@@ -82,7 +82,6 @@ export default {
         email: "Email",
         linkedin: "LinkedIn",
         github: "GitHub",
-        instagram: "Instagram",
         cv: "Descargar CV (PDF)",
     },
     caso: {

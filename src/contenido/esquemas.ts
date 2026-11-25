@@ -103,10 +103,7 @@ export const esquemaSitio = z.strictObject({
     enlaces: z.strictObject({
         linkedin: urlOMarcador,
         github: urlOMarcador,
-        instagram: urlOMarcador,
     }),
-    // Nombre de la cuenta de Instagram tal como se escribe, para el texto del enlace.
-    usuarioInstagram: texto,
 });
 
 /**
