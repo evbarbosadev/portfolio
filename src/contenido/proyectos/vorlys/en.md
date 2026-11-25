@@ -23,7 +23,7 @@ borrador: false
 
 I like my work and my things to have a specific look, so I thought: why not have a set of guidelines for everything I make that might go public? That's what Vørlys is: an identity for others to see and a base to build on. My quality standards are high, and I want that to show too: if I create something, it should be worth using and looking at.
 
-The V is for my name. The ø, because I like all things Nordic and I was already using it on my photography Instagram. And "lys" means light in Norwegian. I wanted a name that could carry anything I make (software, 3D, photography) without being my own name. The symbol is the ø itself: a ring crossed by a bar, with a glint in the gap that forms a V of light.
+The V is for my name. The ø, because I like all things Nordic and I was already using it on my photography Instagram. And "lys" means light in Norwegian, and its s is my partner's initial. I wanted a name that could carry anything I make (software, 3D, photography) without being my own name. The symbol is the ø itself: a ring crossed by a bar, with a glint in the gap that forms a V of light.
 
 The typeface, Vørlys Sans, starts from Schibsted Grotesk. I didn't want to use Inter, which is everywhere, and since the ø is the heart of the brand, I wanted it to carry my shape in running text too. I redesigned the Ø and the ø, made the l and the y straight, and built it with Antigravity. The changes are few, but the ø in the text is the same as the one in the logo.
 
