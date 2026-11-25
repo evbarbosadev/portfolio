@@ -173,13 +173,14 @@ html:not(.js) .solo-js {
     }
 
     /*
-        Entra desenfocado y sin moverse, pero más despacio que un bloque (900 ms y 8 px, no 480 y
-        6): tras un lema que se escribe poco a poco, 480 ms se leía como un golpe.
+        Entra desenfocado y sin moverse, pero más despacio que un bloque (1100 ms y 8 px, no 480
+        y 6), justo al escribirse la última letra: tras el lema, 480 ms se leía como un golpe
+        (decisiones 52 y 57).
     */
     .hero-tardio {
         transition:
-            opacity 900ms var(--ease-salida),
-            filter 900ms var(--ease-salida);
+            opacity 1100ms var(--ease-salida),
+            filter 1100ms var(--ease-salida);
     }
 
     /* Una barra fina del alto de la letra que se desliza de letra en letra. */

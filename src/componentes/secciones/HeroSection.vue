@@ -13,13 +13,12 @@ import { sitio } from "@/contenido/sitio";
     con JavaScript el CSS las esconde desde el primer pintado (ver «HERO ESCRITO» en base.css).
 */
 
-// Ritmo de la escritura, en milisegundos.
-const ESPERA_INICIAL = 900; // solo el cursor, parpadeando
-const PULSACION = 38; // media entre teclas
-const VARIACION = 26; // irregularidad, para que parezca una persona
-const ENTRE_PALABRAS = 22;
-const PAUSA = 320; // entre los dos trozos del lema
-const RESPIRO_FINAL = 220; // de la última letra al nombre
+// Ritmo de la escritura, en milisegundos (decisión 57: el lema queda escrito en unos 1,6 s).
+const ESPERA_INICIAL = 400; // solo el cursor, parpadeando
+const PULSACION = 22; // media entre teclas
+const VARIACION = 14; // irregularidad, para que parezca una persona
+const ENTRE_PALABRAS = 14;
+const PAUSA = 200; // entre los dos trozos del lema
 const PARPADEO = 1100;
 // Pasado este momento desde que se abre la página ya no se escribe: se enseña entero.
 const LIMITE_PARA_ESCRIBIR = 3500;
@@ -127,8 +126,9 @@ function escribir() {
             nextTick(moverCursor);
         }
 
+        // El nombre y los botones salen con la última letra, sin respiro.
         if (escritas === horario.length) {
-            temporizador = setTimeout(terminar, RESPIRO_FINAL);
+            terminar();
             return;
         }
 
@@ -236,7 +236,7 @@ onBeforeUnmount(() => {
                 </span>
             </h1>
 
-            <div class="hero-tardio mt-5 flex flex-wrap gap-1.5 delay-[200ms]">
+            <div class="hero-tardio mt-5 flex flex-wrap gap-1.5 delay-[250ms]">
                 <BotonEnlace :ancla="ANCLA_PROYECTOS">{{ t("hero.verProyectos") }}</BotonEnlace>
                 <BotonEnlace :ancla="ANCLA_CONTACTO" variante="secundario">
                     {{ t("hero.contacto") }}
